@@ -36,7 +36,7 @@ public class PublisherController {
         return publisher;
     }
 
-    @PutMapping("/publishers/")
+    @PutMapping("/publishers")
     public Publisher updatePublisher(@RequestBody Publisher publisher) {
         publisherService.savePublisher(publisher);
 
@@ -50,8 +50,8 @@ public class PublisherController {
         return "publisher: " + publisher.getName() + " was deleted";
     }
 
-    @GetMapping("/publishers/{name}")
-    public List<Publisher> findAllByNameContaining(@PathVariable String name){
+    @GetMapping("/publishers/")
+    public List<Publisher> findAllByNameContaining(@RequestParam String name){
         List<Publisher> publishers = publisherService.findAllByNameContaining(name);
         return publishers;
     }

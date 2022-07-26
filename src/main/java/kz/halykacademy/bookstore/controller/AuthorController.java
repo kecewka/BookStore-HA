@@ -46,8 +46,8 @@ public class AuthorController {
         return "author: " + author.getName() + "was deleted";
     }
 
-    @GetMapping("/authors/{name}")
-    public List<Author> findAllByNameContaining(@PathVariable String name) {
+    @GetMapping("/authors/")
+    public List<Author> findAllByNameContaining(@RequestParam String name) {
         List<Author> authors = authorService.findAllByNameContaining(name);
         return authors;
     }

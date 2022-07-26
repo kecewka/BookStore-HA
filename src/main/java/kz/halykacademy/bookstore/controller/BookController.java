@@ -36,7 +36,7 @@ public class BookController {
         return book;
     }
 
-    @PutMapping("/books/")
+    @PutMapping("/books")
     public Book updateBook(@RequestBody Book book) {
         bookService.saveBook(book);
 
@@ -50,8 +50,8 @@ public class BookController {
         return "book: " + book.getTitle() + " was deleted";
     }
 
-    @GetMapping("/books/{title}")
-    public List<Book> getBookByTitle(@PathVariable String title){
+    @GetMapping("/books/")
+    public List<Book> getBookByTitle(@RequestParam String title){
         List<Book> books = bookService.findAllByTitleContaining(title);
         return books;
     }
