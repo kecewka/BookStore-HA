@@ -1,41 +1,48 @@
 package kz.halykacademy.bookstore.service;
 
-import kz.halykacademy.bookstore.dao.BookDAO;
+import kz.halykacademy.bookstore.dao.BookRepository;
 import kz.halykacademy.bookstore.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
-public class BookServiceImplementation implements BookService {
+public class BookServiceImpl implements BookService {
 
     @Autowired
-    private BookDAO bookDAO;
-    
+    private BookRepository bookRepository;
+
 
     @Override
     @Transactional
     public List<Book> getAllBooks() {
-        return bookDAO.getAllBooks();
+        return bookRepository.findAll();
     }
 
     @Override
     @Transactional
     public Book getBook(int id) {
-        return bookDAO.getBook(id);
+        Book book = null;
+        Optional<Book> optional = bookRepository.findById(id);
+        if (optional.isPresent()) {
+            book = optional.get();
+        }
+        return book;
     }
 
     @Override
     @Transactional
     public void saveBook(Book book) {
-        bookDAO.saveBook(book);
+        bookRepository.save(book);
     }
 
     @Override
     @Transactional
     public void deleteBook(int id) {
-        bookDAO.deleteBook(id);
+        bookRepository.deleteById(id);
     }
 }

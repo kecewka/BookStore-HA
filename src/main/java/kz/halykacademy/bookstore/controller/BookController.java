@@ -1,6 +1,5 @@
 package kz.halykacademy.bookstore.controller;
 
-import kz.halykacademy.bookstore.dao.BookDAO;
 import kz.halykacademy.bookstore.entity.Book;
 import kz.halykacademy.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class MyRESTController {
+public class BookController {
 
     @Autowired
     private BookService bookService;
@@ -45,7 +44,7 @@ public class MyRESTController {
     }
 
     @DeleteMapping("/books/{id}")
-    public String deleteEmployee(@PathVariable int id){
+    public String deleteBook(@PathVariable int id){
         Book book = bookService.getBook(id);
         bookService.deleteBook(id);
         return "book: " + book.getTitle() + " was deleted";
