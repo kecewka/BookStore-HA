@@ -50,4 +50,9 @@ public class BookController {
         return "book: " + book.getTitle() + " was deleted";
     }
 
+    @GetMapping("/books/{title}")
+    public List<Book> getBookByTitle(@PathVariable String title){
+        List<Book> books = bookService.findAllByTitleContaining(title);
+        return books;
+    }
 }

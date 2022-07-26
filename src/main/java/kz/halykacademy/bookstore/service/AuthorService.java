@@ -14,4 +14,6 @@ public interface AuthorService {
     public void saveAuthor(Author author);
 
     public void deleteAuthor(int id);
+
+    public List<Author> findAllByNameContaining(String name);
 }

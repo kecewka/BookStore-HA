@@ -38,4 +38,10 @@ public class PublisherServiceImpl implements PublisherService {
     public void deletePublisher(int id) {
         publisherRepository.deleteById(id);
     }
+
+    @Override
+    public List<Publisher> findAllByNameContaining(String name) {
+        List<Publisher> publishers = publisherRepository.findAllByNameContaining(name);
+        return publishers;
+    }
 }

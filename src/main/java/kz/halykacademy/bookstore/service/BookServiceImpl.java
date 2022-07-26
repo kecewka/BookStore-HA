@@ -18,13 +18,11 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    @Transactional
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
 
     @Override
-    @Transactional
     public Book getBook(int id) {
         Book book = null;
         Optional<Book> optional = bookRepository.findById(id);
@@ -35,14 +33,18 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public void saveBook(Book book) {
         bookRepository.save(book);
     }
 
     @Override
-    @Transactional
     public void deleteBook(int id) {
         bookRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Book> findAllByTitleContaining(String titlepart) {
+        List<Book> books = bookRepository.findAllByTitleContaining(titlepart);
+        return books;
     }
 }

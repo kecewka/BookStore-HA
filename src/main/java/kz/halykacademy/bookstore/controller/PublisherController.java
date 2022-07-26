@@ -50,4 +50,10 @@ public class PublisherController {
         return "publisher: " + publisher.getName() + " was deleted";
     }
 
+    @GetMapping("/publishers/{name}")
+    public List<Publisher> findAllByNameContaining(@PathVariable String name){
+        List<Publisher> publishers = publisherService.findAllByNameContaining(name);
+        return publishers;
+    }
+
 }

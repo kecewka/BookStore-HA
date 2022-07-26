@@ -12,4 +12,6 @@ public interface PublisherService {
     public void savePublisher(Publisher publisher);
 
     public void deletePublisher(int id);
+
+    public List<Publisher> findAllByNameContaining(String name);
 }

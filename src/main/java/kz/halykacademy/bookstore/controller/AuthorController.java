@@ -40,10 +40,15 @@ public class AuthorController {
     }
 
     @DeleteMapping("/authors/{id}")
-    public String deleteAuthor(@PathVariable int id){
+    public String deleteAuthor(@PathVariable int id) {
         Author author = authorService.getAuthor(id);
         authorService.deleteAuthor(id);
         return "author: " + author.getName() + "was deleted";
     }
 
+    @GetMapping("/authors/{name}")
+    public List<Author> findAllByNameContaining(@PathVariable String name) {
+        List<Author> authors = authorService.findAllByNameContaining(name);
+        return authors;
+    }
 }
