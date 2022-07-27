@@ -31,10 +31,16 @@ public class Book {
     @Column(name = "yearofrelease")
     private int yearOfRelease;
 
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "book_genre"
+            , joinColumns = @JoinColumn(name = "book_id")
+            , inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private List<Genre> genresList;
+
     public Book() {
     }
 
-    public Book(int id, double price, List<Author> authorsList, Publisher publisher, String title, int numberOfPages, int yearOfRelease) {
+    public Book(int id, double price, List<Author> authorsList, Publisher publisher, String title, int numberOfPages, int yearOfRelease, List<Genre> genresList) {
         this.id = id;
         this.price = price;
         this.authorsList = authorsList;
@@ -42,6 +48,7 @@ public class Book {
         this.title = title;
         this.numberOfPages = numberOfPages;
         this.yearOfRelease = yearOfRelease;
+        this.genresList = genresList;
     }
 
     public int getId() {
@@ -100,6 +107,13 @@ public class Book {
         this.yearOfRelease = yearOfRelease;
     }
 
+    public List<Genre> getGenresList() {
+        return genresList;
+    }
+
+    public void setGenresList(List<Genre> genresList) { this.genresList = genresList;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -110,6 +124,7 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", numberOfPages=" + numberOfPages +
                 ", yearOfRelease=" + yearOfRelease +
+                ", genresList=" + genresList +
                 '}';
     }
 }

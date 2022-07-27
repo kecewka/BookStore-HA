@@ -31,15 +31,22 @@ public class Author {
 
     private List<Book> writtenBooksList;
 
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "author_genre"
+            , joinColumns = @JoinColumn(name = "author_id")
+            , inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private List<Genre> genresList;
+
     public Author(){}
 
-    public Author(int id, String surname, String name, String patronymicName, LocalDate dateOfBirth, List<Book> writtenBooksList) {
+    public Author(int id, String surname, String name, String patronymicName, LocalDate dateOfBirth, List<Book> writtenBooksList, List<Genre> genresList) {
         this.id = id;
         this.surname = surname;
         this.name = name;
         this.patronymicName = patronymicName;
         this.dateOfBirth = dateOfBirth;
         this.writtenBooksList = writtenBooksList;
+        this.genresList = genresList;
     }
 
     public int getId() {
@@ -90,6 +97,14 @@ public class Author {
         this.writtenBooksList = writtenBooksList;
     }
 
+    public List<Genre> getGenresList() {
+        return genresList;
+    }
+
+    public void setGenresList(List<Genre> genresList) {
+        this.genresList = genresList;
+    }
+
     @Override
     public String toString() {
         return "Author{" +
@@ -99,6 +114,7 @@ public class Author {
                 ", patronymicName='" + patronymicName + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", writtenBooksList=" + writtenBooksList +
+                ", genresList=" + genresList +
                 '}';
     }
 }
