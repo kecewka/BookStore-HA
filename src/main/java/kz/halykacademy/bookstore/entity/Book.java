@@ -2,9 +2,12 @@ package kz.halykacademy.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import kz.halykacademy.bookstore.dto.AuthorDto;
+import kz.halykacademy.bookstore.dto.BookDto;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "books")
@@ -127,5 +130,6 @@ public class Book {
                 ", genresList=" + genresList +
                 '}';
     }
+
 }
 

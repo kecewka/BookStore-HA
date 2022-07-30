@@ -1,6 +1,9 @@
 package kz.halykacademy.bookstore.controller;
 
+import kz.halykacademy.bookstore.dto.BookDto;
+import kz.halykacademy.bookstore.dto.BookPostDto;
 import kz.halykacademy.bookstore.entity.Book;
+import kz.halykacademy.bookstore.mapper.MapStructMapper;
 import kz.halykacademy.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,46 +16,48 @@ public class BookController {
 
     @Autowired
     private BookService bookService;
+    @Autowired
+    private MapStructMapper mapStructMapper;
 
 
     @GetMapping("/books")
-    public List<Book> showAllBooks() {
-        List<Book> allBooks = bookService.getAllBooks();
+    public List<BookDto> showAllBooks() {
+        List<BookDto> allBooks = mapStructMapper.bookToDtos(bookService.getAllBooks());
 
         return allBooks;
     }
 
     @GetMapping("/books/{id}")
-    public Book getBook(@PathVariable int id) {
-        Book book = bookService.getBook(id);
+    public BookDto getBook(@PathVariable int id) {
+        BookDto book = mapStructMapper.bookToDto(bookService.getBook(id));
 
         return book;
     }
 
     @PostMapping("/books")
-    public Book addNewBook(@RequestBody Book book) {
-        bookService.saveBook(book);
+    public BookPostDto addNewBook(@RequestBody BookPostDto book) {
+        bookService.saveBook(mapStructMapper.dtoToBook(book));
 
         return book;
     }
 
     @PutMapping("/books")
-    public Book updateBook(@RequestBody Book book) {
-        bookService.saveBook(book);
+    public BookPostDto updateBook(@RequestBody BookPostDto book) {
+        bookService.saveBook(mapStructMapper.dtoToBook(book));
 
         return book;
     }
 
     @DeleteMapping("/books/{id}")
     public String deleteBook(@PathVariable int id){
-        Book book = bookService.getBook(id);
+        BookDto book = mapStructMapper.bookToDto(bookService.getBook(id));
         bookService.deleteBook(id);
         return "book: " + book.getTitle() + " was deleted";
     }
 
     @GetMapping("/books/")
-    public List<Book> getBookByTitle(@RequestParam String title){
-        List<Book> books = bookService.findAllByTitleContaining(title);
+    public List<BookDto> getBookByTitle(@RequestParam String title){
+        List<BookDto> books = mapStructMapper.bookToDtos(bookService.findAllByTitleContaining(title));
         return books;
     }
 }

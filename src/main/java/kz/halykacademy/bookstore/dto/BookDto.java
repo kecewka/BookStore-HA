@@ -11,10 +11,12 @@ public class BookDto {
     private int numberOfPages;
     private int yearOfRelease;
 
+    private List<GenreSlimDto> genresList;
+
     public BookDto() {
     }
 
-    public BookDto(int id, double price, List<AuthorDto> authorsList, PublisherSlimDto publisher, String title, int numberOfPages, int yearOfRelease) {
+    public BookDto(int id, double price, List<AuthorDto> authorsList, PublisherSlimDto publisher, String title, int numberOfPages, int yearOfRelease, List<GenreSlimDto> genresList) {
         this.id = id;
         this.price = price;
         this.authorsList = authorsList;
@@ -22,6 +24,7 @@ public class BookDto {
         this.title = title;
         this.numberOfPages = numberOfPages;
         this.yearOfRelease = yearOfRelease;
+        this.genresList = genresList;
     }
 
     public int getId() {
@@ -80,6 +83,14 @@ public class BookDto {
         this.yearOfRelease = yearOfRelease;
     }
 
+    public List<GenreSlimDto> getGenresList() {
+        return genresList;
+    }
+
+    public void setGenresList(List<GenreSlimDto> genresList) {
+        this.genresList = genresList;
+    }
+
     @Override
     public String toString() {
         return "BookDto{" +
@@ -90,6 +101,7 @@ public class BookDto {
                 ", title='" + title + '\'' +
                 ", numberOfPages=" + numberOfPages +
                 ", yearOfRelease=" + yearOfRelease +
+                ", genresList=" + genresList +
                 '}';
     }
 }

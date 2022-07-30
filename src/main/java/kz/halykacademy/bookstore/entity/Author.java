@@ -3,6 +3,7 @@ package kz.halykacademy.bookstore.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import kz.halykacademy.bookstore.dto.AuthorDto;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -116,5 +117,10 @@ public class Author {
                 ", writtenBooksList=" + writtenBooksList +
                 ", genresList=" + genresList +
                 '}';
+    }
+
+
+    public AuthorDto toSlimGetDto() {
+        return new AuthorDto(this.surname, this.name, this.patronymicName, this.dateOfBirth);
     }
 }

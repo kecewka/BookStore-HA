@@ -2,6 +2,7 @@ package kz.halykacademy.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import kz.halykacademy.bookstore.dto.PublisherSlimDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -68,5 +69,9 @@ public class Publisher {
                 ", name='" + name + '\'' +
                 ", publishedBooksList=" + publishedBooksList +
                 '}';
+    }
+
+    public PublisherSlimDto toPublisherSlimDto(){
+        return new PublisherSlimDto(this.id, this.name);
     }
 }
