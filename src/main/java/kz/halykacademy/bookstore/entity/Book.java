@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @Column(name = "price")
@@ -25,7 +25,7 @@ public class Book {
             , inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<Author> authorsList;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "publisher_id", nullable = false)
+    @JoinColumn(name = "publisher_id", nullable = true)
     private Publisher publisher;
     @Column(name = "title")
     private String title;
