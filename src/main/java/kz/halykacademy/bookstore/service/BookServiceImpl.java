@@ -1,10 +1,7 @@
 package kz.halykacademy.bookstore.service;
 
 import kz.halykacademy.bookstore.dao.BookRepository;
-import kz.halykacademy.bookstore.dto.BookDto;
-import kz.halykacademy.bookstore.dto.BookPostDto;
 import kz.halykacademy.bookstore.entity.Book;
-import kz.halykacademy.bookstore.mapper.MapStructMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

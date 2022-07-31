@@ -33,6 +33,7 @@ public interface MapStructMapper {
     GenreSlimDto genreToSlimDto(Genre genre);
     GenreDto genreToDto(Genre genre);
     Genre dtoToGenre(GenreDto dto);
+
     List<GenreDto> genreToDtos(List<Genre> genre);
     List<GenreSlimDto> genreListToSlimDtos(List<Genre> genres);
 }

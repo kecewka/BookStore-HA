@@ -6,7 +6,6 @@ import kz.halykacademy.bookstore.entity.Book;
 import kz.halykacademy.bookstore.entity.Genre;
 import kz.halykacademy.bookstore.entity.Publisher;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +45,8 @@ public class MapSturctMapperImpl implements MapStructMapper {
                 book.getPrice(),
                 book.getTitle(),
                 book.getNumberOfPages(),
-                book.getYearOfRelease());
+                book.getYearOfRelease(),
+                publisherToSlimDto(book.getPublisher()));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class MapSturctMapperImpl implements MapStructMapper {
         return new Book(dto.getId(),
                 dto.getPrice(),
                 null,
-                null,
+                dtoToPublisher(dto.getPublisher()),
                 dto.getTitle(),
                 dto.getNumberOfPages(),
                 dto.getYearOfRelease(),
@@ -105,7 +105,6 @@ public class MapSturctMapperImpl implements MapStructMapper {
         if (author == null) {
             return null;
         }
-
         return new AuthorFullDto(
                 author.getId(),
                 author.getSurname(),
@@ -114,6 +113,7 @@ public class MapSturctMapperImpl implements MapStructMapper {
                 author.getDateOfBirth(),
                 bookListToSlimDtos(author.getWrittenBooksList()),
                 genreListToSlimDtos(author.getGenresList()));
+
     }
 
     @Override
@@ -214,12 +214,12 @@ public class MapSturctMapperImpl implements MapStructMapper {
 
     @Override
     public List<PublisherDto> publisherToDtos(List<Publisher> publishers) {
-        if(publishers == null) {
+        if (publishers == null) {
             return null;
         }
 
         List<PublisherDto> publisherDtos = new ArrayList<>(publishers.size());
-        for (Publisher p : publishers){
+        for (Publisher p : publishers) {
             publisherDtos.add(publisherToDto(p));
         }
         return publisherDtos;
@@ -256,14 +256,15 @@ public class MapSturctMapperImpl implements MapStructMapper {
         return new Genre(dto.getId(), dto.getName());
     }
 
+
     @Override
     public List<GenreDto> genreToDtos(List<Genre> genre) {
-        if(genre == null){
+        if (genre == null) {
             return null;
         }
 
         List<GenreDto> genres = new ArrayList<>(genre.size());
-        for(Genre g : genre){
+        for (Genre g : genre) {
             genres.add(genreToDto(g));
         }
         return genres;
@@ -275,7 +276,7 @@ public class MapSturctMapperImpl implements MapStructMapper {
             return null;
         }
         List<GenreSlimDto> genreSlimDtos = new ArrayList<>(genres.size());
-        for(Genre g : genres){
+        for (Genre g : genres) {
             genreSlimDtos.add(genreToSlimDto(g));
         }
         return genreSlimDtos;
