@@ -25,6 +25,16 @@ public class AuthorController {
     @GetMapping("/authors")
     public List<AuthorFullDto> showAllAuthors() {
         List<AuthorFullDto> allAuthors = mapStructMapper.authorToDtos(authorService.getAllAuthors());
+        List<String> genre_names = new ArrayList<>();
+
+        for (AuthorFullDto a : allAuthors) {
+            List<GenreSlimDto> genres = new ArrayList<>();
+            genre_names = authorService.findGenresOfAuthor(a.getId());
+            converter(genre_names, genres);
+            removeDuplicateGenres(genres);
+            a.setGenresList(genres);
+
+        }
         return allAuthors;
     }
 
@@ -33,11 +43,8 @@ public class AuthorController {
         AuthorFullDto author = mapStructMapper.authorToDto(authorService.getAuthor(id));
         List<String> genre_names = authorService.findGenresOfAuthor(id);
         List<GenreSlimDto> genres = new ArrayList<>(genre_names.size());
-        for (String name : genre_names) {
-            GenreSlimDto newGenre = new GenreSlimDto(name);
-            if (!genres.contains(new GenreSlimDto()))
-                genres.add(newGenre);
-        }
+        converter(genre_names, genres);
+        removeDuplicateGenres(genres);
         author.setGenresList(genres);
         return author;
     }
@@ -64,6 +71,53 @@ public class AuthorController {
     @GetMapping("/authors/")
     public List<AuthorFullDto> findAllByNameContaining(@RequestParam String name) {
         List<AuthorFullDto> authors = mapStructMapper.authorToDtos(authorService.findAllByNameContaining(name));
+        return authors;
+    }
+
+    @GetMapping(value = "/authors/", params = "genres")
+    public List<AuthorFullDto> findAllByGenreList(@RequestParam List<String> genres) {
+        List<AuthorFullDto> authors = mapStructMapper.authorToDtos(authorService.findAllByGenreList(genres));
+        List<String> genre_names = new ArrayList<>();
+        List<GenreSlimDto> genresList = new ArrayList<>();
+        for (AuthorFullDto a : authors) {
+            genre_names = authorService.findGenresOfAuthor(a.getId());
+            converter(genre_names, genresList);
+            removeDuplicateGenres(genresList);
+            a.setGenresList(genresList);
+        }
+        authors = removeDuplicateAuthors(authors);
+        return authors;
+    }
+
+    public List<GenreSlimDto> converter(List<String> genre_names, List<GenreSlimDto> genres) {
+        for (String name : genre_names) {
+            GenreSlimDto newGenre = new GenreSlimDto(name);
+
+            genres.add(newGenre);
+
+        }
+        return genres;
+    }
+
+    public List<GenreSlimDto> removeDuplicateGenres(List<GenreSlimDto> genres) {
+        for (int i = 0; i < genres.size() - 1; i++) {
+            for (int j = i + 1; j < genres.size(); j++) {
+                if (genres.get(i).getName().equals(genres.get(j).getName())) {
+                    genres.remove(j);
+                }
+            }
+        }
+        return genres;
+    }
+
+    public List<AuthorFullDto> removeDuplicateAuthors(List<AuthorFullDto> authors) {
+        for (int i = 0; i < authors.size() - 1; i++) {
+            for (int j = i + 1; j < authors.size(); j++) {
+                if (authors.get(i).getId() == authors.get(j).getId()) {
+                    authors.remove(j);
+                }
+            }
+        }
         return authors;
     }
 }

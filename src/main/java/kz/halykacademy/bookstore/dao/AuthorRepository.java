@@ -15,6 +15,13 @@ public interface AuthorRepository extends JpaRepository<Author, Integer> {
             "join book_author ba on a.id = ba.author_id " +
             "join book_genre bg on ba.book_id = bg.book_id " +
             "join genres g on bg.genre_id = g.id where a.id = :id ", nativeQuery = true)
-//    @Query("SELECT g from Author a join a.writtenBooksList ba join ba.genresList bg join Genre g")
-    List<String> findGenresOfAuthors(/*@Param("id") */Integer id);
+
+    List<String> findGenresOfAuthors(Integer id);
+
+//    @Query(value = "select a.surname, a.name, a.patronymicname from authors a" +
+//            "join book_author ba on a.id = ba.author_id" +
+//            "join book_genre bg on ba.book_id = bg.book_id" +
+//            "join genres g on bg.genre_id = g.id where g.name in (:genres)", nativeQuery = true)
+    @Query(value = "select a from Author a join a.writtenBooksList ab join ab.genresList ag join ag.bookList")
+    List<Author> findAllByGenreList(List<String> genres);
 }

@@ -18,4 +18,6 @@ public interface AuthorService {
     public List<Author> findAllByNameContaining(String name);
 
     List<String> findGenresOfAuthor(int id);
+
+    List<Author> findAllByGenreList(List<String> genres);
 }

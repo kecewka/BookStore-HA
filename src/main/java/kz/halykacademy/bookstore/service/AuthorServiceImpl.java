@@ -51,4 +51,10 @@ public class AuthorServiceImpl implements AuthorService {
         List<String> genres = authorRepository.findGenresOfAuthors(id);
         return genres;
     }
+
+    @Override
+    public List<Author> findAllByGenreList(List<String> genres) {
+        List<Author> authors = authorRepository.findAllByGenreList(genres);
+        return authors;
+    }
 }

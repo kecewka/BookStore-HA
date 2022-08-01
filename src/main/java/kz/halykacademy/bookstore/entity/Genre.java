@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "genres")
@@ -16,6 +17,11 @@ public class Genre {
     @Column(name = "name")
     private String name;
 
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "book_genre"
+            , joinColumns = @JoinColumn(name = "genre_id")
+            , inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private List<Book> bookList;
     public Genre() {
     }
 
