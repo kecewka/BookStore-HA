@@ -1,5 +1,6 @@
 package kz.halykacademy.bookstore.service;
 
+import kz.halykacademy.bookstore.dto.GenreSlimDto;
 import kz.halykacademy.bookstore.entity.Book;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface BookService {
     public void deleteBook(int id);
 
     public List<Book> findAllByTitleContaining(String titlepart);
+
+    public List<Book> findAllByGenresList(List<String> genres);
 }

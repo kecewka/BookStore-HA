@@ -2,11 +2,15 @@ package kz.halykacademy.bookstore.controller;
 
 import kz.halykacademy.bookstore.dto.BookDto;
 import kz.halykacademy.bookstore.dto.BookPostDto;
+import kz.halykacademy.bookstore.dto.GenreSlimDto;
+import kz.halykacademy.bookstore.entity.Book;
+import kz.halykacademy.bookstore.entity.Genre;
 import kz.halykacademy.bookstore.mapper.MapStructMapper;
 import kz.halykacademy.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -58,5 +62,12 @@ public class BookController {
     public List<BookDto> getBookByTitle(@RequestParam String title){
         List<BookDto> books = mapStructMapper.bookToDtos(bookService.findAllByTitleContaining(title));
         return books;
+    }
+
+    @GetMapping(value = "/books/", params = "genres")
+    public List<BookDto> findAllByGenresList(@RequestParam List<String> genres){
+        List<BookDto> books = mapStructMapper.bookToDtos(bookService.findAllByGenresList(genres));
+        return books;
+
     }
 }
