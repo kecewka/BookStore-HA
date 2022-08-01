@@ -2,6 +2,8 @@ package kz.halykacademy.bookstore.controller;
 
 import kz.halykacademy.bookstore.dto.AuthorFullDto;
 import kz.halykacademy.bookstore.dto.AuthorPostDto;
+import kz.halykacademy.bookstore.dto.GenreSlimDto;
+import kz.halykacademy.bookstore.entity.Genre;
 import kz.halykacademy.bookstore.mapper.MapStructMapper;
 import kz.halykacademy.bookstore.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,8 @@ public class AuthorController {
     @GetMapping("/authors/{id}")
     public AuthorFullDto getAuthor(@PathVariable int id) {
         AuthorFullDto author = mapStructMapper.authorToDto(authorService.getAuthor(id));
+        List<GenreSlimDto> genres = mapStructMapper.genreListToSlimDtos(authorService.findGenresOfAuthor(id));
+        author.setGenresList(genres);
         return author;
     }
 

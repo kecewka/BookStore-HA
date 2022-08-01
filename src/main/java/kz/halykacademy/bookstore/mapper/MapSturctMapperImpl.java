@@ -112,7 +112,7 @@ public class MapSturctMapperImpl implements MapStructMapper {
                 author.getPatronymicName(),
                 author.getDateOfBirth(),
                 bookListToSlimDtos(author.getWrittenBooksList()),
-                genreListToSlimDtos(author.getGenresList()));
+                null);
 
     }
 
@@ -142,7 +142,6 @@ public class MapSturctMapperImpl implements MapStructMapper {
                 dto.getName(),
                 dto.getPatronymicName(),
                 dto.getDateOfBirth(),
-                null,
                 null
         );
     }

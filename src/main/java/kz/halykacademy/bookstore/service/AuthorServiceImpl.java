@@ -2,6 +2,7 @@ package kz.halykacademy.bookstore.service;
 
 import kz.halykacademy.bookstore.dao.AuthorRepository;
 import kz.halykacademy.bookstore.entity.Author;
+import kz.halykacademy.bookstore.entity.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +44,11 @@ public class AuthorServiceImpl implements AuthorService {
     public List<Author> findAllByNameContaining(String name) {
         List<Author> authors = authorRepository.findAllByNameContaining(name);
         return authors;
+    }
+
+    @Override
+    public List<Genre> findGenresOfAuthor(int id) {
+        List<Genre> genres = authorRepository.findGenresOfAuthors(id);
+        return genres;
     }
 }
