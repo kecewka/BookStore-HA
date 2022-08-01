@@ -17,5 +17,5 @@ public interface AuthorService {
 
     public List<Author> findAllByNameContaining(String name);
 
-    List<Genre> findGenresOfAuthor(int id);
+    List<String> findGenresOfAuthor(int id);
 }

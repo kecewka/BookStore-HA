@@ -9,6 +9,7 @@ import kz.halykacademy.bookstore.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,7 +31,13 @@ public class AuthorController {
     @GetMapping("/authors/{id}")
     public AuthorFullDto getAuthor(@PathVariable int id) {
         AuthorFullDto author = mapStructMapper.authorToDto(authorService.getAuthor(id));
-        List<GenreSlimDto> genres = mapStructMapper.genreListToSlimDtos(authorService.findGenresOfAuthor(id));
+        List<String> genre_names = authorService.findGenresOfAuthor(id);
+        List<GenreSlimDto> genres = new ArrayList<>(genre_names.size());
+        for (String name : genre_names) {
+            GenreSlimDto newGenre = new GenreSlimDto(name);
+            if (!genres.contains(new GenreSlimDto()))
+                genres.add(newGenre);
+        }
         author.setGenresList(genres);
         return author;
     }
