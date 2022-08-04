@@ -9,6 +9,7 @@ create table if not exists books(
     id serial primary key,
     price numeric,
     publisher_id integer references publishers (id),
+    title varchar(100),
     numberofpages integer,
     yearofrelease integer,
     deleted_at timestamp without time zone

@@ -2,6 +2,8 @@ package kz.halykacademy.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +13,8 @@ import java.util.List;
 @Entity
 @Table(name = "books")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@SQLDelete(sql = "UPDATE books SET deleted_at=now() where id=?" )
+@Where(clause = "deleted_at is null")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

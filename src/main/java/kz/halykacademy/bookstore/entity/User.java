@@ -4,7 +4,7 @@ package kz.halykacademy.bookstore.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import kz.halykacademy.bookstore.enums.Roles;
-import org.apache.catalina.LifecycleState;
+
 
 import javax.persistence.*;
 import java.util.List;
