@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,8 @@ public class Genre {
             , joinColumns = @JoinColumn(name = "genre_id")
             , inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> bookList;
+
+
     public Genre() {
     }
 
@@ -45,6 +48,7 @@ public class Genre {
     public void setName(String name) {
         this.name = name;
     }
+
 
     @Override
     public String toString() {

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -38,6 +39,8 @@ public class Book {
             , inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genresList;
 
+    @Column(name = "deleted_at")
+    private LocalDateTime deleted_at;
     public Book() {
     }
 
@@ -113,6 +116,14 @@ public class Book {
     }
 
     public void setGenresList(List<Genre> genresList) { this.genresList = genresList;
+    }
+
+    public LocalDateTime getDeleted_at() {
+        return deleted_at;
+    }
+
+    public void setDeleted_at(LocalDateTime deleted_at) {
+        this.deleted_at = deleted_at;
     }
 
     @Override

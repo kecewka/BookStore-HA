@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import kz.halykacademy.bookstore.dto.PublisherSlimDto;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,11 @@ public class Publisher {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, mappedBy = "publisher")
     private List<Book> publishedBooksList;
 
-    public Publisher(){}
+    @Column(name = "deleted_at")
+    private LocalDateTime deleted_at;
+
+    public Publisher() {
+    }
 
     public Publisher(int id, String name, List<Book> publishedBooksList) {
         this.id = id;
@@ -29,7 +34,7 @@ public class Publisher {
         this.publishedBooksList = publishedBooksList;
     }
 
-    public void addBookToPublishedList(Book book){
+    public void addBookToPublishedList(Book book) {
         if (publishedBooksList == null) {
             publishedBooksList = new ArrayList<>();
         }
@@ -62,6 +67,14 @@ public class Publisher {
         this.publishedBooksList = publishedBooksList;
     }
 
+    public LocalDateTime getDeleted_at() {
+        return deleted_at;
+    }
+
+    public void setDeleted_at(LocalDateTime deleted_at) {
+        this.deleted_at = deleted_at;
+    }
+
     @Override
     public String toString() {
         return "Publisher{" +
@@ -71,7 +84,7 @@ public class Publisher {
                 '}';
     }
 
-    public PublisherSlimDto toPublisherSlimDto(){
+    public PublisherSlimDto toPublisherSlimDto() {
         return new PublisherSlimDto(this.id, this.name);
     }
 }

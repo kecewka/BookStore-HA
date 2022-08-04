@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -31,9 +32,11 @@ public class Author {
 
     private List<Book> writtenBooksList;
 
+    @Column(name = "deleted_at")
+    private LocalDateTime deleted_at;
 
-
-    public Author(){}
+    public Author() {
+    }
 
     public Author(int id, String surname, String name, String patronymicName, LocalDate dateOfBirth, List<Book> writtenBooksList) {
         this.id = id;
@@ -90,6 +93,14 @@ public class Author {
 
     public void setWrittenBooksList(List<Book> writtenBooksList) {
         this.writtenBooksList = writtenBooksList;
+    }
+
+    public LocalDateTime getDeleted_at() {
+        return deleted_at;
+    }
+
+    public void setDeleted_at(LocalDateTime deleted_at) {
+        this.deleted_at = deleted_at;
     }
 
     @Override
