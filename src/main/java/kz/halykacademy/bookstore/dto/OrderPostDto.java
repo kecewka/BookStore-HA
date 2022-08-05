@@ -10,7 +10,6 @@ public class OrderPostDto {
     private Statuses status;
     private LocalDateTime orderTime;
 
-    private List<Integer> books;
 
     public OrderPostDto(){}
 
