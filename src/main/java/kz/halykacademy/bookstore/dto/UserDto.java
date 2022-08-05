@@ -1,48 +1,26 @@
-package kz.halykacademy.bookstore.entity;
+package kz.halykacademy.bookstore.dto;
 
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import kz.halykacademy.bookstore.enums.Roles;
 
-
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "users")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+public class UserDto {
     private int id;
-
-    @Column(name = "login")
     private String login;
-
-    @Column(name = "password")
     private String password;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "user_role")
     private Roles role;
-
-    @Column(name = "is_blocked")
     private boolean isBlocked;
+    private List<OrderSlimDto> orders;
 
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders;
 
-    public User() {
-    }
-
-    public User(int id, String login, String password, Roles role, boolean isBlocked) {
+    public UserDto(){}
+    public UserDto(int id, String login, String password, Roles role, boolean isBlocked, List<OrderSlimDto> orders) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.role = role;
         this.isBlocked = isBlocked;
+        this.orders = orders;
     }
 
     public int getId() {
@@ -85,22 +63,23 @@ public class User {
         isBlocked = blocked;
     }
 
-    public List<Order> getOrders() {
+    public List<OrderSlimDto> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(List<OrderSlimDto> orders) {
         this.orders = orders;
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserDto{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
-                ", password=" + password +
+                ", password='" + password + '\'' +
                 ", role=" + role +
                 ", isBlocked=" + isBlocked +
+                ", orders=" + orders +
                 '}';
     }
 }

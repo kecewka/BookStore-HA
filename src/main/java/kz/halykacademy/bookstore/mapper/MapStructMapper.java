@@ -1,10 +1,7 @@
 package kz.halykacademy.bookstore.mapper;
 
 import kz.halykacademy.bookstore.dto.*;
-import kz.halykacademy.bookstore.entity.Author;
-import kz.halykacademy.bookstore.entity.Book;
-import kz.halykacademy.bookstore.entity.Genre;
-import kz.halykacademy.bookstore.entity.Publisher;
+import kz.halykacademy.bookstore.entity.*;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -36,4 +33,15 @@ public interface MapStructMapper {
 
     List<GenreDto> genreToDtos(List<Genre> genre);
     List<GenreSlimDto> genreListToSlimDtos(List<Genre> genres);
+
+    UserSlimDto userToSlimDto(User user);
+    UserDto userToDto(User user);
+    User dtoToUser(UserPostDto dto);
+    List<UserDto> userToDtos(List<User> user);
+
+    OrderSlimDto orderToSlimDto(Order order);
+    OrderDto orderToDto(Order order);
+    Order dtoToOrder(OrderPostDto dto);
+    List<OrderSlimDto> orderListToSlimDtos(List<Order> orders);
+    List<OrderDto> orderToDtos(List<Order> orders);
 }

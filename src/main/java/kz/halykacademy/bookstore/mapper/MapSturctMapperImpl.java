@@ -1,10 +1,7 @@
 package kz.halykacademy.bookstore.mapper;
 
 import kz.halykacademy.bookstore.dto.*;
-import kz.halykacademy.bookstore.entity.Author;
-import kz.halykacademy.bookstore.entity.Book;
-import kz.halykacademy.bookstore.entity.Genre;
-import kz.halykacademy.bookstore.entity.Publisher;
+import kz.halykacademy.bookstore.entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -279,5 +276,109 @@ public class MapSturctMapperImpl implements MapStructMapper {
             genreSlimDtos.add(genreToSlimDto(g));
         }
         return genreSlimDtos;
+    }
+
+    @Override
+    public UserSlimDto userToSlimDto(User user) {
+        if (user == null) {
+            return null;
+        }
+        return new UserSlimDto(user.getLogin());
+    }
+
+    @Override
+    public UserDto userToDto(User user) {
+        if (user == null) {
+            return null;
+        }
+        return new UserDto(user.getId(),
+                user.getLogin(),
+                user.getPassword(),
+                user.getRole(),
+                user.isBlocked(),
+                orderListToSlimDtos(user.getOrders()));
+    }
+
+    @Override
+    public User dtoToUser(UserPostDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        return new User(dto.getId(),
+                dto.getLogin(),
+                dto.getPassword(),
+                dto.getRole(),
+                dto.isBlocked());
+    }
+
+    @Override
+    public List<UserDto> userToDtos(List<User> users) {
+        if (users == null) {
+            return null;
+        }
+
+        List<UserDto> usersList = new ArrayList<>(users.size());
+        for (User u : users) {
+            usersList.add(userToDto(u));
+        }
+        return usersList;
+    }
+
+    @Override
+    public OrderSlimDto orderToSlimDto(Order order) {
+        if (order == null) {
+            return null;
+        }
+        return new OrderSlimDto(order.getId());
+    }
+
+    @Override
+    public OrderDto orderToDto(Order order) {
+        if (order == null) {
+            return null;
+        }
+        return new OrderDto(
+                order.getId(),
+                userToSlimDto(order.getUser()),
+                bookListToSlimDtos(order.getOrderedBooks()),
+                order.getStatus(),
+                order.getOrderTime());
+    }
+
+    @Override
+    public Order dtoToOrder(OrderPostDto dto) {
+        if (dto == null) {
+            return null;
+        }
+        return new Order(dto.getId(),
+                null,
+                null,
+                dto.getStatus(),
+                dto.getOrderTime());
+    }
+
+    @Override
+    public List<OrderSlimDto> orderListToSlimDtos(List<Order> orders) {
+        if(orders == null){
+            return null;
+        }
+        List<OrderSlimDto> ordersList = new ArrayList<>(orders.size());
+        for(Order o : orders){
+            ordersList.add(orderToSlimDto(o));
+        }
+        return ordersList;
+    }
+
+    @Override
+    public List<OrderDto> orderToDtos(List<Order> orders) {
+        if(orders == null){
+            return null;
+        }
+
+        List<OrderDto> ordersList = new ArrayList<>(orders.size());
+        for(Order o : orders){
+            ordersList.add(orderToDto(o));
+        }
+        return ordersList;
     }
 }
