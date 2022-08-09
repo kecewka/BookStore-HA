@@ -28,10 +28,9 @@ public class Publisher {
     public Publisher() {
     }
 
-    public Publisher(int id, String name, List<Book> publishedBooksList) {
+    public Publisher(int id, String name) {
         this.id = id;
         this.name = name;
-        this.publishedBooksList = publishedBooksList;
     }
 
     public void addBookToPublishedList(Book book) {

@@ -39,23 +39,20 @@ create table if not exists book_genre(
     genre_id int references genres(id)
 );
 
-create type user_roles as enum ('USER', 'ADMIN');
 
 create table if not exists users(
     id serial primary key,
-    login varchar(30) not null,
+    login varchar(30) unique not null,
     password varchar(255) not null,
-    user_role user_roles not null,
+    user_role varchar(10) not null,
     is_blocked boolean not null
 );
 
 
-create type order_statuses as enum ('CREATED', 'PROCESSING', 'COMPLETED', 'CANCELLED');
-
 create table if not exists orders(
     id serial primary key,
     user_id int references users(id),
-    order_status order_statuses not null,
+    order_status varchar(100) not null,
     ordered_at timestamp without time zone
 );
 

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "books")
+@Table(name = "orders")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Order {
     @Id
@@ -18,11 +18,11 @@ public class Order {
     @Column(name = "id")
     private int id;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne(cascade = {/*CascadeType.PERSIST,*/ CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "user_id", nullable=false)
     private User user;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany
     @JoinTable(name = "order_book"
             , joinColumns = @JoinColumn(name = "order_id")
             , inverseJoinColumns = @JoinColumn(name = "book_id"))

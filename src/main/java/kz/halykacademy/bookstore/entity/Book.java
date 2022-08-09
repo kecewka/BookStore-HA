@@ -22,12 +22,12 @@ public class Book {
     private int id;
     @Column(name = "price")
     private double price;
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany
     @JoinTable(name = "book_author"
             , joinColumns = @JoinColumn(name = "book_id")
             , inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<Author> authorsList;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "publisher_id", nullable=false)
     private Publisher publisher;
     @Column(name = "title")
@@ -37,7 +37,7 @@ public class Book {
     @Column(name = "yearofrelease")
     private int yearOfRelease;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToMany
     @JoinTable(name = "book_genre"
             , joinColumns = @JoinColumn(name = "book_id")
             , inverseJoinColumns = @JoinColumn(name = "genre_id"))

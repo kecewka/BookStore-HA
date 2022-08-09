@@ -5,8 +5,6 @@ import kz.halykacademy.bookstore.entity.*;
 import org.mapstruct.Mapper;
 
 import java.util.List;
-
-@Mapper(componentModel = "spring")
 public interface MapStructMapper {
     BookDto bookToDto(Book book);
     BookSlimDto bookToSlimDto(Book book);
@@ -44,4 +42,8 @@ public interface MapStructMapper {
     Order dtoToOrder(OrderPostDto dto);
     List<OrderSlimDto> orderListToSlimDtos(List<Order> orders);
     List<OrderDto> orderToDtos(List<Order> orders);
+
+    BookIdDto intToBookId(Integer value);
+    List<BookIdDto> intIdsToDtos(List<Integer> ids);
+    List<Book> bookIdsDtoToBook(List<BookIdDto> ids);
 }

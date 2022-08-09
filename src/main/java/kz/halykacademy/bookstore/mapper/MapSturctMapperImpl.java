@@ -1,12 +1,26 @@
 package kz.halykacademy.bookstore.mapper;
 
+import kz.halykacademy.bookstore.controller.BookController;
+import kz.halykacademy.bookstore.dao.BookRepository;
 import kz.halykacademy.bookstore.dto.*;
 import kz.halykacademy.bookstore.entity.*;
+import kz.halykacademy.bookstore.service.BookService;
+import kz.halykacademy.bookstore.service.BookServiceImpl;
+import kz.halykacademy.bookstore.service.UserService;
+import kz.halykacademy.bookstore.service.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class MapSturctMapperImpl implements MapStructMapper {
+
+    @Autowired
+    UserService userService;
+    @Autowired
+    BookRepository bookRepository;
     @Override
     public BookDto bookToDto(Book book) {
         if (book == null) {
@@ -203,8 +217,7 @@ public class MapSturctMapperImpl implements MapStructMapper {
 
         return new Publisher(
                 dto.getId(),
-                dto.getName(),
-                null
+                dto.getName()
         );
     }
 
@@ -304,6 +317,7 @@ public class MapSturctMapperImpl implements MapStructMapper {
         if (dto == null) {
             return null;
         }
+        System.out.println(dto);
         return new User(dto.getId(),
                 dto.getLogin(),
                 dto.getPassword(),
@@ -345,14 +359,25 @@ public class MapSturctMapperImpl implements MapStructMapper {
                 order.getOrderTime());
     }
 
+    //Костыль
     @Override
     public Order dtoToOrder(OrderPostDto dto) {
         if (dto == null) {
             return null;
         }
+
+        List<Book> books = new ArrayList<>(dto.getOrderedBooks().size());
+        User user = userService.getUser(dto.getUser().getId());
+        for(Integer i : dto.getOrderedBooks()){
+            books.add(bookRepository.findAnyBook(i));
+        }
+//        for(int i =0; i<100 ; i++){
+//            System.out.println(b.getBook(i));
+//        }
+
         return new Order(dto.getId(),
-                null,
-                null,
+                user,
+                books,
                 dto.getStatus(),
                 dto.getOrderTime());
     }
@@ -380,5 +405,32 @@ public class MapSturctMapperImpl implements MapStructMapper {
             ordersList.add(orderToDto(o));
         }
         return ordersList;
+    }
+
+    public BookIdDto intToBookId(Integer value){
+        return new BookIdDto(value);
+    }
+    @Override
+    public List<BookIdDto> intIdsToDtos(List<Integer> ids) {
+        if(ids == null){
+            return null;
+        }
+        List<BookIdDto> dtoIds = new ArrayList<>(ids.size());
+        for(Integer i : ids){
+            dtoIds.add(new BookIdDto(i));
+        }
+        return dtoIds;
+    }
+
+    @Override
+    public List<Book> bookIdsDtoToBook(List<BookIdDto> ids) {
+        if(ids == null){
+            return null;
+        }
+        List<Book> books = new ArrayList<>(ids.size());
+        for(BookIdDto i : ids){
+            books.add(new Book(i.getId(), 0, null, null, null,0 ,0,null));
+        }
+        return books;
     }
 }

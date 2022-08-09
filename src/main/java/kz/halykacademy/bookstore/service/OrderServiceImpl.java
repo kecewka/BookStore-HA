@@ -1,6 +1,7 @@
 package kz.halykacademy.bookstore.service;
 
 import kz.halykacademy.bookstore.dao.OrderRepository;
+import kz.halykacademy.bookstore.entity.Book;
 import kz.halykacademy.bookstore.entity.Order;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
@@ -33,6 +34,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void saveOrder(Order order) {
+        checkTotalPrice(order);
+        checkDeletedBooks(order);
+        checkBlockedUser(order);
         orderRepository.save(order);
     }
 
@@ -41,4 +45,27 @@ public class OrderServiceImpl implements OrderService{
         orderRepository.deleteById(id);
     }
 
+    public void checkTotalPrice(Order order){
+        double totalPrice = 0;
+        for (Book b : order.getOrderedBooks()) {
+            totalPrice += b.getPrice();
+        }
+        if (totalPrice > 10000) {
+            throw new RuntimeException("Price is more than 10000, please lower price");
+        }
+    }
+
+    public void checkDeletedBooks(Order order){
+        for (Book b : order.getOrderedBooks()) {
+            if (b.getDeleted_at() != null) {
+                throw new RuntimeException("Trying to order deleted book");
+            }
+        }
+    }
+
+    public void checkBlockedUser(Order order){
+        if(order.getUser().isBlocked()){
+            throw new RuntimeException("Blocked user trying to order");
+        }
+    }
 }
