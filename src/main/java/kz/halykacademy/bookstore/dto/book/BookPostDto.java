@@ -1,4 +1,6 @@
-package kz.halykacademy.bookstore.dto;
+package kz.halykacademy.bookstore.dto.book;
+
+import kz.halykacademy.bookstore.dto.publisher.PublisherSlimDto;
 
 public class BookPostDto {
     private int id;

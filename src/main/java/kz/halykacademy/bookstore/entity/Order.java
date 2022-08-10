@@ -4,6 +4,7 @@ package kz.halykacademy.bookstore.entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import kz.halykacademy.bookstore.enums.Statuses;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

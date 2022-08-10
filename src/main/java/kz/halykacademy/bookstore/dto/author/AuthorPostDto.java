@@ -1,22 +1,32 @@
-package kz.halykacademy.bookstore.dto;
-
-import kz.halykacademy.bookstore.entity.Author;
+package kz.halykacademy.bookstore.dto.author;
 
 import java.time.LocalDate;
 
-public class AuthorDto {
+public class AuthorPostDto {
+    private int id;
     private String surname;
     private String name;
     private String patronymicName;
     private LocalDate dateOfBirth;
 
-    public AuthorDto(){}
+    public AuthorPostDto() {
 
-    public AuthorDto(String surname, String name, String patronymicName, LocalDate dateOfBirth) {
+    }
+
+    public AuthorPostDto(int id, String surname, String name, String patronymicName, LocalDate dateOfBirth) {
+        this.id = id;
         this.surname = surname;
         this.name = name;
         this.patronymicName = patronymicName;
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSurname() {
@@ -53,7 +63,8 @@ public class AuthorDto {
 
     @Override
     public String toString() {
-        return "AuthorDto{" +
+        return "AuthorPostDto{" +
+                "id=" + id +
                 ", surname='" + surname + '\'' +
                 ", name='" + name + '\'' +
                 ", patronymicName='" + patronymicName + '\'' +
@@ -61,3 +72,4 @@ public class AuthorDto {
                 '}';
     }
 }
+

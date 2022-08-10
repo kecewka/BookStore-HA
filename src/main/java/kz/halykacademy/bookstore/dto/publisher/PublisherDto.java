@@ -1,4 +1,6 @@
-package kz.halykacademy.bookstore.dto;
+package kz.halykacademy.bookstore.dto.publisher;
+
+import kz.halykacademy.bookstore.dto.book.BookSlimDto;
 
 import java.util.List;
 

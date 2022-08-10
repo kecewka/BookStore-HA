@@ -1,11 +1,10 @@
-package kz.halykacademy.bookstore.dto;
+package kz.halykacademy.bookstore.dto.book;
 
-public class OrderSlimDto {
+public class BookIdDto {
     private int id;
 
-    public OrderSlimDto(){}
-
-    public OrderSlimDto(int id) {
+    public BookIdDto(){}
+    public BookIdDto(int id){
         this.id = id;
     }
 
@@ -19,7 +18,7 @@ public class OrderSlimDto {
 
     @Override
     public String toString() {
-        return "OrderSlimDto{" +
+        return "BookIdDto{" +
                 "id=" + id +
                 '}';
     }

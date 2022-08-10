@@ -1,12 +1,12 @@
-package kz.halykacademy.bookstore.dto;
+package kz.halykacademy.bookstore.dto.publisher;
 
-public class GenreDto {
+public class PublisherSlimDto {
     private int id;
     private String name;
 
-    public GenreDto(){}
+    public PublisherSlimDto(){}
 
-    public GenreDto(int id, String name) {
+    public PublisherSlimDto(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -29,7 +29,7 @@ public class GenreDto {
 
     @Override
     public String toString() {
-        return "GenreDto{" +
+        return "PublisherSlimDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

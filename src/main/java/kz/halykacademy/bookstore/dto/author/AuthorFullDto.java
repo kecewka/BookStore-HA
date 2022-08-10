@@ -1,4 +1,7 @@
-package kz.halykacademy.bookstore.dto;
+package kz.halykacademy.bookstore.dto.author;
+
+import kz.halykacademy.bookstore.dto.book.BookSlimDto;
+import kz.halykacademy.bookstore.dto.genre.GenreSlimDto;
 
 import java.time.LocalDate;
 import java.util.List;

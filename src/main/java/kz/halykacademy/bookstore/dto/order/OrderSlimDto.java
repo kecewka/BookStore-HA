@@ -1,12 +1,11 @@
-package kz.halykacademy.bookstore.dto;
+package kz.halykacademy.bookstore.dto.order;
 
-public class UserIdDto {
+public class OrderSlimDto {
     private int id;
 
-    public UserIdDto() {
-    }
+    public OrderSlimDto(){}
 
-    public UserIdDto(int id) {
+    public OrderSlimDto(int id) {
         this.id = id;
     }
 
@@ -20,7 +19,7 @@ public class UserIdDto {
 
     @Override
     public String toString() {
-        return "UserIdDto{" +
+        return "OrderSlimDto{" +
                 "id=" + id +
                 '}';
     }

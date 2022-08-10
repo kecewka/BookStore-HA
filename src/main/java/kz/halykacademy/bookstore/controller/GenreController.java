@@ -1,6 +1,6 @@
 package kz.halykacademy.bookstore.controller;
 
-import kz.halykacademy.bookstore.dto.GenreDto;
+import kz.halykacademy.bookstore.dto.genre.GenreDto;
 import kz.halykacademy.bookstore.mapper.MapStructMapper;
 import kz.halykacademy.bookstore.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +12,14 @@ import java.util.List;
 @RequestMapping("/api")
 public class GenreController {
 
+
+    private final GenreService genreService;
+    private final MapStructMapper mapStructMapper;
     @Autowired
-    private GenreService genreService;
-    @Autowired
-    private MapStructMapper mapStructMapper;
+    public GenreController(GenreService genreService, MapStructMapper mapStructMapper) {
+        this.genreService = genreService;
+        this.mapStructMapper = mapStructMapper;
+    }
 
     @GetMapping("/genres")
     public List<GenreDto> showAllGenres() {

@@ -1,7 +1,7 @@
 package kz.halykacademy.bookstore.controller;
 
-import kz.halykacademy.bookstore.dto.UserDto;
-import kz.halykacademy.bookstore.dto.UserPostDto;
+import kz.halykacademy.bookstore.dto.user.UserDto;
+import kz.halykacademy.bookstore.dto.user.UserPostDto;
 import kz.halykacademy.bookstore.mapper.MapStructMapper;
 import kz.halykacademy.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,15 @@ import java.util.List;
 @RequestMapping("/api")
 public class UserController {
 
+
+    private final UserService userService;
+    private final MapStructMapper mapStructMapper;
+
     @Autowired
-    private UserService userService;
-    @Autowired
-    private MapStructMapper mapStructMapper;
+    public UserController(UserService userService, MapStructMapper mapStructMapper) {
+        this.userService = userService;
+        this.mapStructMapper = mapStructMapper;
+    }
 
     @GetMapping("/users")
     public List<UserDto> showAllUsers() {

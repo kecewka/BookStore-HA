@@ -1,26 +1,26 @@
 package kz.halykacademy.bookstore.controller;
 
-import kz.halykacademy.bookstore.dto.BookDto;
-import kz.halykacademy.bookstore.dto.BookPostDto;
-import kz.halykacademy.bookstore.dto.GenreSlimDto;
-import kz.halykacademy.bookstore.entity.Book;
-import kz.halykacademy.bookstore.entity.Genre;
+import kz.halykacademy.bookstore.dto.book.BookDto;
+import kz.halykacademy.bookstore.dto.book.BookPostDto;
 import kz.halykacademy.bookstore.mapper.MapStructMapper;
 import kz.halykacademy.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class BookController {
 
+
+    private final BookService bookService;
+    private final MapStructMapper mapStructMapper;
     @Autowired
-    private BookService bookService;
-    @Autowired
-    private MapStructMapper mapStructMapper;
+    public BookController(BookService bookService, MapStructMapper mapStructMapper) {
+        this.bookService = bookService;
+        this.mapStructMapper = mapStructMapper;
+    }
 
 
     @GetMapping("/books")

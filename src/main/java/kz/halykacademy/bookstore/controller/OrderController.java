@@ -1,7 +1,7 @@
 package kz.halykacademy.bookstore.controller;
 
-import kz.halykacademy.bookstore.dto.OrderDto;
-import kz.halykacademy.bookstore.dto.OrderPostDto;
+import kz.halykacademy.bookstore.dto.order.OrderDto;
+import kz.halykacademy.bookstore.dto.order.OrderPostDto;
 import kz.halykacademy.bookstore.mapper.MapStructMapper;
 import kz.halykacademy.bookstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +12,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class OrderController {
+
+    private final OrderService orderService;
+    private final MapStructMapper mapStructMapper;
     @Autowired
-    private OrderService orderService;
-    @Autowired
-    private MapStructMapper mapStructMapper;
+    public OrderController(OrderService orderService, MapStructMapper mapStructMapper) {
+        this.orderService = orderService;
+        this.mapStructMapper = mapStructMapper;
+    }
 
     @GetMapping("/orders")
     public List<OrderDto> showAllOrders() {

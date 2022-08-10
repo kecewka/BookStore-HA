@@ -1,5 +1,6 @@
-package kz.halykacademy.bookstore.dto;
+package kz.halykacademy.bookstore.dto.order;
 
+import kz.halykacademy.bookstore.dto.user.UserIdDto;
 import kz.halykacademy.bookstore.enums.Statuses;
 
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package kz.halykacademy.bookstore.dto;
+package kz.halykacademy.bookstore.dto.book;
 
 public class BookSlimDto {
     private String title;

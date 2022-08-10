@@ -1,8 +1,23 @@
 package kz.halykacademy.bookstore.mapper;
 
-import kz.halykacademy.bookstore.dto.*;
+import kz.halykacademy.bookstore.dto.genre.GenreDto;
+import kz.halykacademy.bookstore.dto.genre.GenreSlimDto;
+import kz.halykacademy.bookstore.dto.order.OrderDto;
+import kz.halykacademy.bookstore.dto.order.OrderPostDto;
+import kz.halykacademy.bookstore.dto.order.OrderSlimDto;
+import kz.halykacademy.bookstore.dto.author.AuthorDto;
+import kz.halykacademy.bookstore.dto.author.AuthorFullDto;
+import kz.halykacademy.bookstore.dto.author.AuthorPostDto;
+import kz.halykacademy.bookstore.dto.book.BookDto;
+import kz.halykacademy.bookstore.dto.book.BookIdDto;
+import kz.halykacademy.bookstore.dto.book.BookPostDto;
+import kz.halykacademy.bookstore.dto.book.BookSlimDto;
+import kz.halykacademy.bookstore.dto.publisher.PublisherDto;
+import kz.halykacademy.bookstore.dto.publisher.PublisherSlimDto;
+import kz.halykacademy.bookstore.dto.user.UserDto;
+import kz.halykacademy.bookstore.dto.user.UserPostDto;
+import kz.halykacademy.bookstore.dto.user.UserSlimDto;
 import kz.halykacademy.bookstore.entity.*;
-import org.mapstruct.Mapper;
 
 import java.util.List;
 public interface MapStructMapper {

@@ -1,9 +1,8 @@
 package kz.halykacademy.bookstore.controller;
 
-import kz.halykacademy.bookstore.dto.AuthorFullDto;
-import kz.halykacademy.bookstore.dto.AuthorPostDto;
-import kz.halykacademy.bookstore.dto.GenreSlimDto;
-import kz.halykacademy.bookstore.entity.Genre;
+import kz.halykacademy.bookstore.dto.author.AuthorFullDto;
+import kz.halykacademy.bookstore.dto.author.AuthorPostDto;
+import kz.halykacademy.bookstore.dto.genre.GenreSlimDto;
 import kz.halykacademy.bookstore.mapper.MapStructMapper;
 import kz.halykacademy.bookstore.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,13 @@ import java.util.List;
 @RequestMapping("/api")
 public class AuthorController {
 
+    private final AuthorService authorService;
+    private final MapStructMapper mapStructMapper;
     @Autowired
-    private AuthorService authorService;
-    @Autowired
-    private MapStructMapper mapStructMapper;
+    public AuthorController(AuthorService authorService, MapStructMapper mapStructMapper) {
+        this.authorService = authorService;
+        this.mapStructMapper = mapStructMapper;
+    }
 
     @GetMapping("/authors")
     public List<AuthorFullDto> showAllAuthors() {

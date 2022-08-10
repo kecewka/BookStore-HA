@@ -1,4 +1,4 @@
-package kz.halykacademy.bookstore.dto;
+package kz.halykacademy.bookstore.dto.user;
 
 public class UserSlimDto {
     private String login;

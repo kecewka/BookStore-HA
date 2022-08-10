@@ -2,7 +2,7 @@ package kz.halykacademy.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import kz.halykacademy.bookstore.dto.PublisherSlimDto;
+import kz.halykacademy.bookstore.dto.publisher.PublisherSlimDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

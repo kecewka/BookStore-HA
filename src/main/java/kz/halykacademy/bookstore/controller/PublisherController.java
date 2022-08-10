@@ -1,7 +1,7 @@
 package kz.halykacademy.bookstore.controller;
 
-import kz.halykacademy.bookstore.dto.PublisherDto;
-import kz.halykacademy.bookstore.dto.PublisherSlimDto;
+import kz.halykacademy.bookstore.dto.publisher.PublisherDto;
+import kz.halykacademy.bookstore.dto.publisher.PublisherSlimDto;
 import kz.halykacademy.bookstore.mapper.MapStructMapper;
 import kz.halykacademy.bookstore.service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,15 @@ import java.util.List;
 @RequestMapping("/api")
 public class PublisherController {
 
+
+    private final PublisherService publisherService;
+    private final MapStructMapper mapStructMapper;
+
     @Autowired
-    private PublisherService publisherService;
-    @Autowired
-    private MapStructMapper mapStructMapper;
+    public PublisherController(PublisherService publisherService, MapStructMapper mapStructMapper) {
+        this.publisherService = publisherService;
+        this.mapStructMapper = mapStructMapper;
+    }
 
     @GetMapping("/publishers")
     public List<PublisherDto> showAllPublishers() {

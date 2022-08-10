@@ -1,26 +1,22 @@
-package kz.halykacademy.bookstore.dto;
+package kz.halykacademy.bookstore.dto.user;
 
 import kz.halykacademy.bookstore.enums.Roles;
 
-import java.util.List;
-
-public class UserDto {
+public class UserPostDto {
     private int id;
     private String login;
     private String password;
     private Roles role;
     private boolean isBlocked;
-    private List<OrderSlimDto> orders;
 
+    public UserPostDto(){}
 
-    public UserDto(){}
-    public UserDto(int id, String login, String password, Roles role, boolean isBlocked, List<OrderSlimDto> orders) {
+    public UserPostDto(int id, String login, String password, Roles role, boolean isBlocked) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.role = role;
         this.isBlocked = isBlocked;
-        this.orders = orders;
     }
 
     public int getId() {
@@ -63,23 +59,14 @@ public class UserDto {
         isBlocked = blocked;
     }
 
-    public List<OrderSlimDto> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<OrderSlimDto> orders) {
-        this.orders = orders;
-    }
-
     @Override
     public String toString() {
-        return "UserDto{" +
+        return "UserPostDto{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
                 ", isBlocked=" + isBlocked +
-                ", orders=" + orders +
                 '}';
     }
 }

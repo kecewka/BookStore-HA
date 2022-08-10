@@ -1,4 +1,8 @@
-package kz.halykacademy.bookstore.dto;
+package kz.halykacademy.bookstore.dto.book;
+
+import kz.halykacademy.bookstore.dto.genre.GenreSlimDto;
+import kz.halykacademy.bookstore.dto.publisher.PublisherSlimDto;
+import kz.halykacademy.bookstore.dto.author.AuthorDto;
 
 import java.util.List;
 

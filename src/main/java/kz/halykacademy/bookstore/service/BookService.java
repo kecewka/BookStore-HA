@@ -1,6 +1,5 @@
 package kz.halykacademy.bookstore.service;
 
-import kz.halykacademy.bookstore.dto.GenreSlimDto;
 import kz.halykacademy.bookstore.entity.Book;
 
 import java.util.List;

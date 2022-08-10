@@ -1,13 +1,25 @@
 package kz.halykacademy.bookstore.mapper;
 
-import kz.halykacademy.bookstore.controller.BookController;
 import kz.halykacademy.bookstore.dao.BookRepository;
-import kz.halykacademy.bookstore.dto.*;
+import kz.halykacademy.bookstore.dto.genre.GenreDto;
+import kz.halykacademy.bookstore.dto.genre.GenreSlimDto;
+import kz.halykacademy.bookstore.dto.order.OrderDto;
+import kz.halykacademy.bookstore.dto.order.OrderPostDto;
+import kz.halykacademy.bookstore.dto.order.OrderSlimDto;
+import kz.halykacademy.bookstore.dto.author.AuthorDto;
+import kz.halykacademy.bookstore.dto.author.AuthorFullDto;
+import kz.halykacademy.bookstore.dto.author.AuthorPostDto;
+import kz.halykacademy.bookstore.dto.book.BookDto;
+import kz.halykacademy.bookstore.dto.book.BookIdDto;
+import kz.halykacademy.bookstore.dto.book.BookPostDto;
+import kz.halykacademy.bookstore.dto.book.BookSlimDto;
+import kz.halykacademy.bookstore.dto.publisher.PublisherDto;
+import kz.halykacademy.bookstore.dto.publisher.PublisherSlimDto;
+import kz.halykacademy.bookstore.dto.user.UserDto;
+import kz.halykacademy.bookstore.dto.user.UserPostDto;
+import kz.halykacademy.bookstore.dto.user.UserSlimDto;
 import kz.halykacademy.bookstore.entity.*;
-import kz.halykacademy.bookstore.service.BookService;
-import kz.halykacademy.bookstore.service.BookServiceImpl;
 import kz.halykacademy.bookstore.service.UserService;
-import kz.halykacademy.bookstore.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +29,16 @@ import java.util.List;
 @Component
 public class MapSturctMapperImpl implements MapStructMapper {
 
+
+    private final UserService userService;
+    private final BookRepository bookRepository;
+
     @Autowired
-    UserService userService;
-    @Autowired
-    BookRepository bookRepository;
+    public MapSturctMapperImpl(UserService userService, BookRepository bookRepository) {
+        this.userService = userService;
+        this.bookRepository = bookRepository;
+    }
+
     @Override
     public BookDto bookToDto(Book book) {
         if (book == null) {
@@ -368,12 +386,10 @@ public class MapSturctMapperImpl implements MapStructMapper {
 
         List<Book> books = new ArrayList<>(dto.getOrderedBooks().size());
         User user = userService.getUser(dto.getUser().getId());
-        for(Integer i : dto.getOrderedBooks()){
+        for (Integer i : dto.getOrderedBooks()) {
             books.add(bookRepository.findAnyBook(i));
         }
-//        for(int i =0; i<100 ; i++){
-//            System.out.println(b.getBook(i));
-//        }
+
 
         return new Order(dto.getId(),
                 user,
@@ -384,11 +400,11 @@ public class MapSturctMapperImpl implements MapStructMapper {
 
     @Override
     public List<OrderSlimDto> orderListToSlimDtos(List<Order> orders) {
-        if(orders == null){
+        if (orders == null) {
             return null;
         }
         List<OrderSlimDto> ordersList = new ArrayList<>(orders.size());
-        for(Order o : orders){
+        for (Order o : orders) {
             ordersList.add(orderToSlimDto(o));
         }
         return ordersList;
@@ -396,27 +412,28 @@ public class MapSturctMapperImpl implements MapStructMapper {
 
     @Override
     public List<OrderDto> orderToDtos(List<Order> orders) {
-        if(orders == null){
+        if (orders == null) {
             return null;
         }
 
         List<OrderDto> ordersList = new ArrayList<>(orders.size());
-        for(Order o : orders){
+        for (Order o : orders) {
             ordersList.add(orderToDto(o));
         }
         return ordersList;
     }
 
-    public BookIdDto intToBookId(Integer value){
+    public BookIdDto intToBookId(Integer value) {
         return new BookIdDto(value);
     }
+
     @Override
     public List<BookIdDto> intIdsToDtos(List<Integer> ids) {
-        if(ids == null){
+        if (ids == null) {
             return null;
         }
         List<BookIdDto> dtoIds = new ArrayList<>(ids.size());
-        for(Integer i : ids){
+        for (Integer i : ids) {
             dtoIds.add(new BookIdDto(i));
         }
         return dtoIds;
@@ -424,12 +441,12 @@ public class MapSturctMapperImpl implements MapStructMapper {
 
     @Override
     public List<Book> bookIdsDtoToBook(List<BookIdDto> ids) {
-        if(ids == null){
+        if (ids == null) {
             return null;
         }
         List<Book> books = new ArrayList<>(ids.size());
-        for(BookIdDto i : ids){
-            books.add(new Book(i.getId(), 0, null, null, null,0 ,0,null));
+        for (BookIdDto i : ids) {
+            books.add(new Book(i.getId(), 0, null, null, null, 0, 0, null));
         }
         return books;
     }
