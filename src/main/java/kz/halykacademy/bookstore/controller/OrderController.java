@@ -44,7 +44,7 @@ public class OrderController {
 
     @PutMapping("/orders")
     public OrderPostDto updateOrder(@RequestBody OrderPostDto order) {
-        orderService.saveOrder(mapStructMapper.dtoToOrder(order));
+        orderService.updateOrder(mapStructMapper.dtoToOrder(order));
 
         return order;
     }

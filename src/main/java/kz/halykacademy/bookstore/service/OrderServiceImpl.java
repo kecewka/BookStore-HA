@@ -7,6 +7,10 @@ import kz.halykacademy.bookstore.entity.Order;
 
 import kz.halykacademy.bookstore.entity.User;
 import kz.halykacademy.bookstore.enums.Roles;
+import kz.halykacademy.bookstore.exceptions.BlockedUserException;
+import kz.halykacademy.bookstore.exceptions.DeletedBookException;
+import kz.halykacademy.bookstore.exceptions.NotOrderOwnerException;
+import kz.halykacademy.bookstore.exceptions.OrderTotalPriceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -52,6 +56,13 @@ public class OrderServiceImpl implements OrderService {
         checkTotalPrice(order);
         checkDeletedBooks(order);
         checkBlockedUser(order);
+        orderRepository.save(order);
+    }
+
+    public void updateOrder(Order order) {
+        checkTotalPrice(order);
+        checkDeletedBooks(order);
+        checkBlockedUser(order);
         checkUserRoleById(order);
         changeOwnOrder(order);
         orderRepository.save(order);
@@ -68,32 +79,34 @@ public class OrderServiceImpl implements OrderService {
             totalPrice += b.getPrice();
         }
         if (totalPrice > 10000) {
-            throw new RuntimeException("Price is more than 10000, please lower price");
+            throw new OrderTotalPriceException("Price is more than 10000, please order cheaper books");
         }
     }
 
     private void checkDeletedBooks(Order order) {
         for (Book b : order.getOrderedBooks()) {
             if (b.getDeleted_at() != null) {
-                throw new RuntimeException("Trying to order deleted book");
+                throw new DeletedBookException("Trying to order deleted book");
             }
         }
     }
 
     private void checkBlockedUser(Order order) {
         if (order.getUser().isBlocked()) {
-            throw new RuntimeException("Blocked user trying to order");
+            throw new BlockedUserException("Blocked user trying to order");
         }
     }
 
     private void checkUserRoleById(Order order) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
         User user = null;
-        Optional<User> optional = userRepository.findById(order.getUser().getId());
+        Optional<User>  optional = userRepository.findByUsername(username);
         if (optional.isPresent()) {
             user = optional.get();
         }
 
-        if (user.getRole() == Roles.ROLE_USER) {
+        if (user.getRole() != Roles.ROLE_ADMIN) {
             if (getOrder(order.getId()).getStatus() != order.getStatus()) {
                 order.setStatus(getOrder(order.getId()).getStatus());
             }
@@ -103,9 +116,34 @@ public class OrderServiceImpl implements OrderService {
     private void changeOwnOrder(Order order) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-
-        if(!order.getUser().getLogin().equals(username)){
-            throw new RuntimeException("Trying to modify not own order");
+        User user = null;
+        Optional<User>  optional = userRepository.findByUsername(username);
+        if (optional.isPresent()){
+            user = optional.get();
         }
+
+
+        if (!checkOrderDetails(order)){
+            System.out.println(user.getId() +" " + order.getUser().getId() );
+            if(order.getUser().getId() != user.getId()){
+                throw new NotOrderOwnerException("Trying to modify not own order");
+            }
+        }
+    }
+
+    private boolean checkOrderDetails(Order order){
+        if(!order.getOrderTime().equals(getOrder(order.getId()).getOrderTime())){
+            System.out.println("Time not equal \n" + order.getOrderTime() + "\n" + getOrder(order.getId()).getOrderTime());
+            return false;
+        }
+        if(!order.getOrderedBooks().equals(getOrder(order.getId()).getOrderedBooks())) {
+            System.out.println("Books not equal");
+            return false;
+        }
+        if(!order.getUser().equals(getOrder(order.getId()).getUser())){
+            System.out.println("User not equal");
+            return false;
+        }
+        return true;
     }
 }
