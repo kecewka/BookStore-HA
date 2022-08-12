@@ -2,6 +2,7 @@ package kz.halykacademy.bookstore.service;
 
 import kz.halykacademy.bookstore.dao.AuthorRepository;
 import kz.halykacademy.bookstore.entity.Author;
+import kz.halykacademy.bookstore.exceptions.AuthorNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,9 @@ public class AuthorServiceImpl implements AuthorService {
         Optional<Author> optional = authorRepository.findById(id);
         if (optional.isPresent()) {
             author = optional.get();
+        }
+        if (optional.isEmpty()){
+            throw new AuthorNotFoundException("Author with " + id + " not found");
         }
         return author;
     }

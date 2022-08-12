@@ -2,6 +2,7 @@ package kz.halykacademy.bookstore.service;
 
 import kz.halykacademy.bookstore.dao.GenreRepository;
 import kz.halykacademy.bookstore.entity.Genre;
+import kz.halykacademy.bookstore.exceptions.GenreNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.util.Optional;
 @Service
 public class GenreServiceImpl implements GenreService {
     private final GenreRepository genreRepository;
+
     @Autowired
     public GenreServiceImpl(GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
@@ -30,6 +32,9 @@ public class GenreServiceImpl implements GenreService {
         Optional<Genre> optional = genreRepository.findById(id);
         if (optional.isPresent()) {
             genre = optional.get();
+        }
+        if (optional.isEmpty()) {
+            throw new GenreNotFoundException("Genre with id " + id + " not found");
         }
 
         return genre;

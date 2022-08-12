@@ -7,10 +7,7 @@ import kz.halykacademy.bookstore.entity.Order;
 
 import kz.halykacademy.bookstore.entity.User;
 import kz.halykacademy.bookstore.enums.Roles;
-import kz.halykacademy.bookstore.exceptions.BlockedUserException;
-import kz.halykacademy.bookstore.exceptions.DeletedBookException;
-import kz.halykacademy.bookstore.exceptions.NotOrderOwnerException;
-import kz.halykacademy.bookstore.exceptions.OrderTotalPriceException;
+import kz.halykacademy.bookstore.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -46,6 +43,9 @@ public class OrderServiceImpl implements OrderService {
         Optional<Order> optional = orderRepository.findById(id);
         if (optional.isPresent()) {
             order = optional.get();
+        }
+        if (optional.isEmpty()){
+            throw new OrderNotFoundException("Order with ID " + id + " not found");
         }
         return order;
     }

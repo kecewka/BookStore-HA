@@ -2,6 +2,7 @@ package kz.halykacademy.bookstore.service;
 
 import kz.halykacademy.bookstore.dao.UserRepository;
 import kz.halykacademy.bookstore.entity.User;
+import kz.halykacademy.bookstore.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,6 +37,9 @@ public class UserServiceImpl implements UserService {
         Optional<User> optional = userRepository.findById(id);
         if(optional.isPresent()){
             user = optional.get();
+        }
+        if(optional.isEmpty()){
+            throw new UserNotFoundException("User with ID " + id + " not found");
         }
         return user;
     }

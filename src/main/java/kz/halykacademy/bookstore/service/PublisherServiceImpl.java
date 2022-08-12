@@ -2,6 +2,8 @@ package kz.halykacademy.bookstore.service;
 
 import kz.halykacademy.bookstore.dao.PublisherRepository;
 import kz.halykacademy.bookstore.entity.Publisher;
+import kz.halykacademy.bookstore.exceptions.NotFoundException;
+import kz.halykacademy.bookstore.exceptions.PublisherNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,9 @@ public class PublisherServiceImpl implements PublisherService {
         Optional<Publisher> optional = publisherRepository.findById(id);
         if (optional.isPresent()) {
             publisher = optional.get();
+        }
+        if (optional.isEmpty()){
+            throw new PublisherNotFoundException("Publisher with ID " + id + " not found");
         }
         return publisher;
     }

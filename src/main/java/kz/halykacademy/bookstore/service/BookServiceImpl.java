@@ -2,6 +2,7 @@ package kz.halykacademy.bookstore.service;
 
 import kz.halykacademy.bookstore.dao.BookRepository;
 import kz.halykacademy.bookstore.entity.Book;
+import kz.halykacademy.bookstore.exceptions.BookNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,10 @@ public class BookServiceImpl implements BookService {
         Optional<Book> optional = bookRepository.findById(id);
         if (optional.isPresent()) {
             book = optional.get();
+        }
+
+        if(optional.isEmpty()){
+            throw new BookNotFoundException("Book with ID " + id + " not found");
         }
         return book;
     }
