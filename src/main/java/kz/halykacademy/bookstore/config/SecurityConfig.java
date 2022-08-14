@@ -16,10 +16,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserCredentialsService userCredentialsService;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Autowired
-    public SecurityConfig(UserCredentialsService userCredentialsService) {
+    public SecurityConfig(UserCredentialsService userCredentialsService, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) {
         this.userCredentialsService = userCredentialsService;
+        this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
     }
 
     @Override
@@ -27,8 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .anyRequest().authenticated()
-                .and().httpBasic()
-                ;
+                .and().httpBasic().authenticationEntryPoint(customAuthenticationEntryPoint);
+
     }
 
     @Override

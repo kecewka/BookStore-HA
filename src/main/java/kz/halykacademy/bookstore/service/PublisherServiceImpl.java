@@ -57,6 +57,9 @@ public class PublisherServiceImpl implements PublisherService {
     @Override
     public List<Publisher> findAllByNameContaining(String name) {
         List<Publisher> publishers = publisherRepository.findAllByNameContaining(name);
+        if(publishers.isEmpty()){
+            throw new PublisherNotFoundException("No publishers were found matching the criteria");
+        }
         return publishers;
     }
 }

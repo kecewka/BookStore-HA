@@ -33,7 +33,7 @@ public class AuthorServiceImpl implements AuthorService {
             author = optional.get();
         }
         if (optional.isEmpty()){
-            throw new AuthorNotFoundException("Author with " + id + " not found");
+            throw new AuthorNotFoundException("Author with id " + id + " not found");
         }
         return author;
     }
@@ -54,6 +54,9 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public List<Author> findAllByNameContaining(String name) {
         List<Author> authors = authorRepository.findAllByNameContaining(name);
+        if(authors.isEmpty()){
+            throw new AuthorNotFoundException("No authors were found matching the criteria");
+        }
         return authors;
     }
 
@@ -68,6 +71,9 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public List<Author> findAllByGenreList(List<String> genres) {
         List<Author> authors = authorRepository.findAllByGenreList(genres);
+        if(authors.isEmpty()){
+            throw new AuthorNotFoundException("No authors were found matching the criteria");
+        }
         return authors;
     }
 }

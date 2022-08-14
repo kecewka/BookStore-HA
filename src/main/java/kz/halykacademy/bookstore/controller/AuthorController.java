@@ -18,6 +18,7 @@ public class AuthorController {
 
     private final AuthorService authorService;
     private final MapStructMapper mapStructMapper;
+
     @Autowired
     public AuthorController(AuthorService authorService, MapStructMapper mapStructMapper) {
         this.authorService = authorService;
@@ -80,8 +81,9 @@ public class AuthorController {
     public List<AuthorFullDto> findAllByGenreList(@RequestParam List<String> genres) {
         List<AuthorFullDto> authors = mapStructMapper.authorToDtos(authorService.findAllByGenreList(genres));
         List<String> genre_names = new ArrayList<>();
-        List<GenreSlimDto> genresList = new ArrayList<>();
+        List<GenreSlimDto> genresList;
         for (AuthorFullDto a : authors) {
+            genresList = new ArrayList<>();
             genre_names = authorService.findGenresOfAuthor(a.getId());
             converter(genre_names, genresList);
             removeDuplicateGenres(genresList);
@@ -120,6 +122,7 @@ public class AuthorController {
                 }
             }
         }
+
         return authors;
     }
 }

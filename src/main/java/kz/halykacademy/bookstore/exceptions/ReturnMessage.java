@@ -1,9 +1,9 @@
 package kz.halykacademy.bookstore.exceptions;
 
-public class OrderIncorrectData {
+public class ReturnMessage {
     private String info;
 
-    public OrderIncorrectData() {
+    public ReturnMessage() {
     }
 
     public String getInfo() {

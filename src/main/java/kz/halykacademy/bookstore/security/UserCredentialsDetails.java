@@ -37,7 +37,7 @@ public class UserCredentialsDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !this.user.isBlocked();
     }
 
     @Override

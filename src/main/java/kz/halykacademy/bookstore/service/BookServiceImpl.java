@@ -57,6 +57,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findAllByTitleContaining(String titlepart) {
         List<Book> books = bookRepository.findAllByTitleContaining(titlepart);
+        if(books.isEmpty()){
+            throw new BookNotFoundException("No books were found matching the criteria");
+        }
         return books;
     }
 
@@ -64,6 +67,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findAllByGenresList(List<String> genres) {
         List<Book> books = bookRepository.findAllByGenresList(genres);
+        if(books.isEmpty()){
+            throw new BookNotFoundException("No books were found matching the criteria");
+        }
         return books;
     }
 }
