@@ -2,6 +2,7 @@ package kz.halykacademy.bookstore.controller;
 
 import kz.halykacademy.bookstore.dto.user.UserDto;
 import kz.halykacademy.bookstore.dto.user.UserPostDto;
+import kz.halykacademy.bookstore.dto.user.UserPutDto;
 import kz.halykacademy.bookstore.mapper.MapStructMapper;
 import kz.halykacademy.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,8 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public UserPostDto addNewUser(@RequestBody UserPostDto user) {
-        userService.saveUser(mapStructMapper.dtoToUser(user));
+    public UserPutDto addNewUser(@RequestBody UserPutDto user) {
+        userService.saveUser(mapStructMapper.putDtoToUser(user));
         return user;
     }
 

@@ -12,6 +12,7 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query(value = "select * from books where id = :id", nativeQuery = true)
     public Book findAnyBook(int id);
 
-    @Query(value = "SELECT b from Book b join b.genresList g where g.name in (:genres)")
+
+    @Query(value = "SELECT distinct b from Book b join b.genresList g where g.name in (:genres)")
     public List<Book> findAllByGenresList(List<String> genres);
 }

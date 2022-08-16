@@ -1,6 +1,11 @@
 package kz.halykacademy.bookstore.dto.book;
 
+import kz.halykacademy.bookstore.dto.author.AuthorIdDto;
+import kz.halykacademy.bookstore.dto.genre.GenreIdDto;
+import kz.halykacademy.bookstore.dto.publisher.PublisherIdDto;
 import kz.halykacademy.bookstore.dto.publisher.PublisherSlimDto;
+
+import java.util.List;
 
 public class BookPostDto {
     private int id;
@@ -9,18 +14,48 @@ public class BookPostDto {
     private int numberOfPages;
     private int yearOfRelease;
 
-    private PublisherSlimDto publisher;
+    private PublisherIdDto publisher;
+
+    private List<AuthorIdDto> authorsList;
+    private List<GenreIdDto> genresList;
 
     public BookPostDto() {
     }
 
-    public BookPostDto(int id, double price, String title, int numberOfPages, int yearOfRelease, PublisherSlimDto publisher) {
+    public BookPostDto(int id, double price, String title, int numberOfPages, int yearOfRelease, PublisherIdDto publisher) {
         this.id = id;
         this.price = price;
         this.title = title;
         this.numberOfPages = numberOfPages;
         this.yearOfRelease = yearOfRelease;
         this.publisher = publisher;
+    }
+
+    public BookPostDto(int id, double price, String title, int numberOfPages, int yearOfRelease, PublisherIdDto publisher, List<AuthorIdDto> authorsList, List<GenreIdDto> genresList) {
+        this.id = id;
+        this.price = price;
+        this.title = title;
+        this.numberOfPages = numberOfPages;
+        this.yearOfRelease = yearOfRelease;
+        this.publisher = publisher;
+        this.authorsList = authorsList;
+        this.genresList = genresList;
+    }
+
+    public List<AuthorIdDto> getAuthorsList() {
+        return authorsList;
+    }
+
+    public void setAuthorsList(List<AuthorIdDto> authorsList) {
+        this.authorsList = authorsList;
+    }
+
+    public List<GenreIdDto> getGenresList() {
+        return genresList;
+    }
+
+    public void setGenresList(List<GenreIdDto> genresList) {
+        this.genresList = genresList;
     }
 
     public int getId() {
@@ -63,11 +98,11 @@ public class BookPostDto {
         this.yearOfRelease = yearOfRelease;
     }
 
-    public PublisherSlimDto getPublisher() {
+    public PublisherIdDto getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(PublisherSlimDto publisher) {
+    public void setPublisher(PublisherIdDto publisher) {
         this.publisher = publisher;
     }
 

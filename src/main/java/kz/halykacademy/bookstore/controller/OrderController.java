@@ -2,6 +2,7 @@ package kz.halykacademy.bookstore.controller;
 
 import kz.halykacademy.bookstore.dto.order.OrderDto;
 import kz.halykacademy.bookstore.dto.order.OrderPostDto;
+import kz.halykacademy.bookstore.dto.order.OrderPutDto;
 import kz.halykacademy.bookstore.mapper.MapStructMapper;
 import kz.halykacademy.bookstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ public class OrderController {
 
     private final OrderService orderService;
     private final MapStructMapper mapStructMapper;
+
     @Autowired
     public OrderController(OrderService orderService, MapStructMapper mapStructMapper) {
         this.orderService = orderService;
@@ -43,14 +45,14 @@ public class OrderController {
     }
 
     @PutMapping("/orders")
-    public OrderPostDto updateOrder(@RequestBody OrderPostDto order) {
-        orderService.updateOrder(mapStructMapper.dtoToOrder(order));
+    public OrderPutDto updateOrder(@RequestBody OrderPutDto order) {
+        orderService.updateOrder(mapStructMapper.putDtoToOrder(order));
 
         return order;
     }
 
     @DeleteMapping("/orders/{id}")
-    public String deleteOrder(@PathVariable int id){
+    public String deleteOrder(@PathVariable int id) {
         OrderDto order = mapStructMapper.orderToDto(orderService.getOrder(id));
         orderService.deleteOrder(id);
         return "order: " + order.getId() + " was deleted";

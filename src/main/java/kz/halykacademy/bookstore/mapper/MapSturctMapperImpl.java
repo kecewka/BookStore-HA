@@ -1,10 +1,14 @@
 package kz.halykacademy.bookstore.mapper;
 
 import kz.halykacademy.bookstore.dao.BookRepository;
+import kz.halykacademy.bookstore.dao.OrderRepository;
+import kz.halykacademy.bookstore.dto.author.AuthorIdDto;
 import kz.halykacademy.bookstore.dto.genre.GenreDto;
+import kz.halykacademy.bookstore.dto.genre.GenreIdDto;
 import kz.halykacademy.bookstore.dto.genre.GenreSlimDto;
 import kz.halykacademy.bookstore.dto.order.OrderDto;
 import kz.halykacademy.bookstore.dto.order.OrderPostDto;
+import kz.halykacademy.bookstore.dto.order.OrderPutDto;
 import kz.halykacademy.bookstore.dto.order.OrderSlimDto;
 import kz.halykacademy.bookstore.dto.author.AuthorDto;
 import kz.halykacademy.bookstore.dto.author.AuthorFullDto;
@@ -14,15 +18,19 @@ import kz.halykacademy.bookstore.dto.book.BookIdDto;
 import kz.halykacademy.bookstore.dto.book.BookPostDto;
 import kz.halykacademy.bookstore.dto.book.BookSlimDto;
 import kz.halykacademy.bookstore.dto.publisher.PublisherDto;
+import kz.halykacademy.bookstore.dto.publisher.PublisherIdDto;
 import kz.halykacademy.bookstore.dto.publisher.PublisherSlimDto;
 import kz.halykacademy.bookstore.dto.user.UserDto;
 import kz.halykacademy.bookstore.dto.user.UserPostDto;
+import kz.halykacademy.bookstore.dto.user.UserPutDto;
 import kz.halykacademy.bookstore.dto.user.UserSlimDto;
 import kz.halykacademy.bookstore.entity.*;
-import kz.halykacademy.bookstore.service.UserService;
+import kz.halykacademy.bookstore.enums.Statuses;
+import kz.halykacademy.bookstore.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +41,24 @@ public class MapSturctMapperImpl implements MapStructMapper {
     private final UserService userService;
     private final BookRepository bookRepository;
 
+    private final PublisherService publisherService;
+    private final OrderRepository orderRepository;
+    private final AuthorService authorService;
+    private final GenreService genreService;
+
+    private final BookService bookService;
+
+
+
     @Autowired
-    public MapSturctMapperImpl(UserService userService, BookRepository bookRepository) {
+    public MapSturctMapperImpl(UserService userService, BookRepository bookRepository, PublisherService publisherService, OrderRepository orderRepository, AuthorService authorService, GenreService genreService, BookService bookService) {
         this.userService = userService;
         this.bookRepository = bookRepository;
+        this.publisherService = publisherService;
+        this.orderRepository = orderRepository;
+        this.authorService = authorService;
+        this.genreService = genreService;
+        this.bookService = bookService;
     }
 
     @Override
@@ -75,7 +97,7 @@ public class MapSturctMapperImpl implements MapStructMapper {
                 book.getTitle(),
                 book.getNumberOfPages(),
                 book.getYearOfRelease(),
-                publisherToSlimDto(book.getPublisher()));
+                publisherToIdDto(book.getPublisher()));
     }
 
     @Override
@@ -85,12 +107,12 @@ public class MapSturctMapperImpl implements MapStructMapper {
         }
         return new Book(dto.getId(),
                 dto.getPrice(),
-                null,
-                dtoToPublisher(dto.getPublisher()),
+                idDtosToAuthors(dto.getAuthorsList()),
+                idDtoToPublisher(dto.getPublisher()),
                 dto.getTitle(),
                 dto.getNumberOfPages(),
                 dto.getYearOfRelease(),
-                null);
+                idDtosToGenres(dto.getGenresList()));
     }
 
     @Override
@@ -171,7 +193,7 @@ public class MapSturctMapperImpl implements MapStructMapper {
                 dto.getName(),
                 dto.getPatronymicName(),
                 dto.getDateOfBirth(),
-                null
+                bookIdsDtoToBook(dto.getBooks())
         );
     }
 
@@ -335,7 +357,20 @@ public class MapSturctMapperImpl implements MapStructMapper {
         if (dto == null) {
             return null;
         }
-        System.out.println(dto);
+
+        return new User(dto.getId(),
+                dto.getLogin(),
+                dto.getPassword(),
+                dto.getRole(),
+                false);
+    }
+
+    @Override
+    public User putDtoToUser(UserPutDto dto) {
+        if (dto == null) {
+            return null;
+        }
+
         return new User(dto.getId(),
                 dto.getLogin(),
                 dto.getPassword(),
@@ -390,12 +425,32 @@ public class MapSturctMapperImpl implements MapStructMapper {
             books.add(bookRepository.findAnyBook(i));
         }
 
+        return new Order(dto.getId(),
+                user,
+                books,
+                Statuses.CREATED,
+                LocalDateTime.now());
+    }
+
+    @Override
+    public Order putDtoToOrder(OrderPutDto dto) {
+        if (dto == null) {
+            return null;
+        }
+
+        List<Book> books = new ArrayList<>(dto.getOrderedBooks().size());
+        User user = userService.getUser(dto.getUser().getId());
+        for (Integer i : dto.getOrderedBooks()) {
+            books.add(bookRepository.findAnyBook(i));
+        }
+
 
         return new Order(dto.getId(),
                 user,
                 books,
                 dto.getStatus(),
-                dto.getOrderTime());
+                orderRepository.findById(dto.getId()).get().getOrderTime()
+        );
     }
 
     @Override
@@ -446,8 +501,89 @@ public class MapSturctMapperImpl implements MapStructMapper {
         }
         List<Book> books = new ArrayList<>(ids.size());
         for (BookIdDto i : ids) {
-            books.add(new Book(i.getId(), 0, null, null, null, 0, 0, null));
+            books.add(idDtoToBook(i));
         }
         return books;
     }
+
+    @Override
+    public Publisher idDtoToPublisher(PublisherIdDto publisherIdDto) {
+        if (publisherIdDto == null) {
+            return null;
+        }
+        return publisherService.getPublisher(publisherIdDto.getId());
+    }
+
+    @Override
+    public PublisherIdDto publisherToIdDto(Publisher publisher) {
+        if (publisher == null) {
+            return null;
+        }
+
+        return new PublisherIdDto(publisher.getId());
+    }
+
+    @Override
+    public Author idDtoToAuthor(AuthorIdDto authorIdDto) {
+        if (authorIdDto == null) {
+            return null;
+        }
+
+        return authorService.getAuthor(authorIdDto.getId());
+    }
+
+    @Override
+    public AuthorIdDto AuthorToIdDto(Author author) {
+        if (author == null) {
+            return null;
+        }
+        return new AuthorIdDto(author.getId());
+    }
+
+    @Override
+    public Genre idDtoToGenre(GenreIdDto genreIdDto) {
+        if (genreIdDto == null) {
+            return null;
+        }
+        return genreService.getGenre(genreIdDto.getId());
+    }
+
+    @Override
+    public GenreIdDto genreToIdDto(Genre genre) {
+        if (genre == null) {
+            return null;
+        }
+        return new GenreIdDto(genre.getId());
+    }
+
+    public List<Author> idDtosToAuthors(List<AuthorIdDto> idsList) {
+        if (idsList == null) {
+            return null;
+        }
+        List<Author> authorList = new ArrayList<>(idsList.size());
+        for (AuthorIdDto a : idsList) {
+            authorList.add(idDtoToAuthor(a));
+        }
+        return authorList;
+    }
+
+    public List<Genre> idDtosToGenres(List<GenreIdDto> genresList) {
+        if (genresList == null) {
+            return null;
+        }
+        List<Genre> genres = new ArrayList<>(genresList.size());
+        for (GenreIdDto g : genresList) {
+            genres.add(idDtoToGenre(g));
+        }
+
+        return genres;
+    }
+
+    public Book idDtoToBook(BookIdDto book) {
+        if (book == null) {
+            return null;
+        }
+        return bookService.getBook(book.getId());
+    }
+
 }

@@ -1,6 +1,9 @@
 package kz.halykacademy.bookstore.dto.author;
 
+import kz.halykacademy.bookstore.dto.book.BookIdDto;
+
 import java.time.LocalDate;
+import java.util.List;
 
 public class AuthorPostDto {
     private int id;
@@ -8,6 +11,8 @@ public class AuthorPostDto {
     private String name;
     private String patronymicName;
     private LocalDate dateOfBirth;
+
+    private List<BookIdDto> books;
 
     public AuthorPostDto() {
 
@@ -19,6 +24,23 @@ public class AuthorPostDto {
         this.name = name;
         this.patronymicName = patronymicName;
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public AuthorPostDto(int id, String surname, String name, String patronymicName, LocalDate dateOfBirth, List<BookIdDto> books) {
+        this.id = id;
+        this.surname = surname;
+        this.name = name;
+        this.patronymicName = patronymicName;
+        this.dateOfBirth = dateOfBirth;
+        this.books = books;
+    }
+
+    public List<BookIdDto> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<BookIdDto> books) {
+        this.books = books;
     }
 
     public int getId() {

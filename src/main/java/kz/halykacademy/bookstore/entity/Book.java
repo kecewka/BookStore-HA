@@ -7,13 +7,14 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
 @Table(name = "books")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@SQLDelete(sql = "UPDATE books SET deleted_at=now() where id=?" )
+@SQLDelete(sql = "UPDATE books SET deleted_at=now() where id=?")
 @Where(clause = "deleted_at is null")
 public class Book {
     @Id
@@ -22,13 +23,13 @@ public class Book {
     private int id;
     @Column(name = "price")
     private double price;
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(name = "book_author"
             , joinColumns = @JoinColumn(name = "book_id")
             , inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<Author> authorsList;
     @ManyToOne
-    @JoinColumn(name = "publisher_id", nullable=false)
+    @JoinColumn(name = "publisher_id", nullable = false)
     private Publisher publisher;
     @Column(name = "title")
     private String title;
@@ -45,6 +46,7 @@ public class Book {
 
     @Column(name = "deleted_at")
     private LocalDateTime deleted_at;
+
     public Book() {
     }
 
@@ -119,7 +121,8 @@ public class Book {
         return genresList;
     }
 
-    public void setGenresList(List<Genre> genresList) { this.genresList = genresList;
+    public void setGenresList(List<Genre> genresList) {
+        this.genresList = genresList;
     }
 
     public LocalDateTime getDeleted_at() {
@@ -128,6 +131,20 @@ public class Book {
 
     public void setDeleted_at(LocalDateTime deleted_at) {
         this.deleted_at = deleted_at;
+    }
+
+    public void addAuthor(Author author) {
+        if (authorsList == null) {
+            authorsList = new ArrayList<>();
+        }
+        authorsList.add(author);
+    }
+
+    public void addGenre(Genre genre) {
+        if (genresList == null) {
+            genresList = new ArrayList<>();
+        }
+        genresList.add(genre);
     }
 
     @Override

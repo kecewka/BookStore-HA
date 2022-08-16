@@ -49,6 +49,6 @@ public class GenreController {
     public String deleteGenre(@PathVariable int id) {
         GenreDto genre = mapStructMapper.genreToDto(genreService.getGenre(id));
         genreService.deleteGenre(id);
-        return "genre: " + genre.getName() + "was deleted";
+        return "genre: " + genre.getName() + " was deleted";
     }
 }

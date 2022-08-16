@@ -6,7 +6,7 @@ import kz.halykacademy.bookstore.enums.Statuses;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class OrderPostDto {
+public class OrderPutDto {
     private int id;
     private Statuses status;
     private LocalDateTime orderTime;
@@ -16,18 +16,18 @@ public class OrderPostDto {
     private List<Integer> orderedBooks;
 
 
-    public OrderPostDto(){}
+    public OrderPutDto(){}
 
-    public OrderPostDto(int id, Statuses status,LocalDateTime orderTime, UserIdDto user, List<Integer> orderedBooks) {
+    public OrderPutDto(int id, Statuses status,LocalDateTime orderTime, UserIdDto user, List<Integer> orderedBooks) {
         this.id = id;
         this.status = status;
         this.orderTime = orderTime;
         this.user = user;
         this.orderedBooks = orderedBooks;
     }
-
-    public OrderPostDto(int id, UserIdDto user, List<Integer> orderedBooks) {
+    public OrderPutDto(int id, Statuses status, UserIdDto user, List<Integer> orderedBooks) {
         this.id = id;
+        this.status = status;
         this.user = user;
         this.orderedBooks = orderedBooks;
     }
@@ -77,7 +77,7 @@ public class OrderPostDto {
 
     @Override
     public String toString() {
-        return "OrderPostDto{" +
+        return "OrderPutDto{" +
                 "id=" + id +
                 ", status=" + status +
                 ", orderTime=" + orderTime +

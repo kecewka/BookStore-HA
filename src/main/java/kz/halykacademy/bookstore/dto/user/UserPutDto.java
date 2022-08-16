@@ -2,29 +2,21 @@ package kz.halykacademy.bookstore.dto.user;
 
 import kz.halykacademy.bookstore.enums.Roles;
 
-public class UserPostDto {
+public class UserPutDto {
     private int id;
     private String login;
     private String password;
     private Roles role;
     private boolean isBlocked;
 
-    public UserPostDto(){}
+    public UserPutDto(){}
 
-    public UserPostDto(int id, String login, String password, Roles role, boolean isBlocked) {
+    public UserPutDto(int id, String login, String password, Roles role, boolean isBlocked) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.role = role;
         this.isBlocked = isBlocked;
-    }
-
-    public UserPostDto(int id, String login, String password, Roles role) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.role = role;
-        this.isBlocked = false;
     }
 
     public int getId() {
@@ -69,7 +61,7 @@ public class UserPostDto {
 
     @Override
     public String toString() {
-        return "UserPostDto{" +
+        return "UserPutDto{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +

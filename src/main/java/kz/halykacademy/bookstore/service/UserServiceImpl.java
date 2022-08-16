@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
     @Autowired
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -35,10 +36,10 @@ public class UserServiceImpl implements UserService {
     public User getUser(int id) {
         User user = null;
         Optional<User> optional = userRepository.findById(id);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             user = optional.get();
         }
-        if(optional.isEmpty()){
+        if (optional.isEmpty()) {
             throw new UserNotFoundException("User with ID " + id + " not found");
         }
         return user;
@@ -47,7 +48,15 @@ public class UserServiceImpl implements UserService {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public void saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getId() != 0) {
+            if (!getUser(user.getId()).getPassword().equals(user.getPassword())) {
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
+        }
+        else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
         userRepository.save(user);
     }
 
