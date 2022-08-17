@@ -37,14 +37,14 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public UserPutDto addNewUser(@RequestBody UserPutDto user) {
-        userService.saveUser(mapStructMapper.putDtoToUser(user));
+    public UserPostDto addNewUser(@RequestBody UserPostDto user) {
+        userService.saveUser(mapStructMapper.dtoToUser(user));
         return user;
     }
 
     @PutMapping("/users")
-    public UserPostDto updateUser(@RequestBody UserPostDto user) {
-        userService.saveUser(mapStructMapper.dtoToUser(user));
+    public UserPutDto updateUser(@RequestBody UserPutDto user) {
+        userService.saveUser(mapStructMapper.putDtoToUser(user));
         return user;
     }
 

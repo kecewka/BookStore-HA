@@ -1,0 +1,955 @@
+openapi: 3.0.1
+info:
+  description: "HalykAcademy final project Bookstore API definition"
+  title: BookStore API definiton
+  version: v1
+  
+servers:
+  - url: http://localhost:8081/api
+    description: Generated server url
+
+paths:
+  /users:
+    get:
+      tags:
+        - users
+      summary: "Gets list of all users"
+      operationId: showAllUsers
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDto'
+    put:
+      tags:
+        - users
+      summary: "Updates a user"
+      operationId: updateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPutDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserPutDto'
+    post:
+      tags:
+        - users
+      summary: "Adds a new user"
+      operationId: addNewUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPostDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserPostDto'
+  /publishers:
+    get:
+      tags:
+        - publishers
+      summary: "Gets list of all publishers"
+      operationId: showAllPublishers
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublisherDto'
+    put:
+      tags:
+        - publishers
+      summary: "Updates a publisher"
+      operationId: updatePublisher
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublisherSlimDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PublisherSlimDto'
+    post:
+      tags:
+        - publishers
+      summary: "Adds a new publisher"
+      operationId: addNewPublisher
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublisherSlimDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PublisherSlimDto'
+  /orders:
+    get:
+      tags:
+        - orders
+      summary: "Gets list of all orders"
+      operationId: showAllOrders
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderDto'
+    put:
+      tags:
+        - orders
+      summary: "Updates an order"
+      operationId: updateOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderPutDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/OrderPutDto'
+    post:
+      tags:
+        - orders
+      summary: "Adds a new order"
+      operationId: addNewOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderPostDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/OrderPostDto'
+  /genres:
+    get:
+      tags:
+        - genres
+      summary: "Gets list of all genres"
+      operationId: showAllGenres
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GenreDto'
+    put:
+      tags:
+        - genres
+      summary: "Updates a genre"
+      operationId: updateGenre
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenreDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenreDto'
+    post:
+      tags:
+        - genres
+      summary: "Adds a new genre"
+      operationId: addNewGenre
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenreDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenreDto'
+  /books:
+    get:
+      tags:
+        - books
+      summary: "Gets list of all books"
+      operationId: showAllBooks
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookDto'
+    put:
+      tags:
+        - books
+      summary: "Update a book"
+      operationId: updateBook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookPostDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BookPostDto'
+    post:
+      tags:
+        - books
+      summary: "Add a new book"
+      operationId: addNewBook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookPostDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BookPostDto'
+  /authors:
+    get:
+      tags:
+        - authors
+      summary: "Gets list of all authors"
+      operationId: showAllAuthors
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuthorFullDto'
+    put:
+      tags:
+        - authors
+      summary: "Update an author"
+      operationId: updateAuthor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorPostDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AuthorPostDto'
+    post:
+      tags:
+        - authors
+      summary: "Add a new author"
+      operationId: addNewAuthor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorPostDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AuthorPostDto'
+  /users/{id}:
+    get:
+      tags:
+        - users
+      summary: "Gets a user by ID"
+      operationId: getUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserDto'
+    delete:
+      tags:
+        - users
+      summary: "Deletes a user by ID"
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /users/:
+    get:
+      tags:
+        - users
+      summary: "Finds book by name/genre"
+      operationId: findAllNotBlockedStatus
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDto'
+  /publishers/{id}:
+    get:
+      tags:
+        - publishers
+      summary: "Finds publisher by ID"
+      operationId: getPublisher
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PublisherDto'
+    delete:
+      tags:
+        - publishers
+      summary: "Deletes publisher by ID"
+      operationId: deletePublisher
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /publishers/:
+    get:
+      tags:
+        - publishers
+      summary: "Finds book by name/genre"
+      operationId: findAllByNameContaining
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublisherDto'
+  /orders/{id}:
+    get:
+      tags:
+        - orders
+      operationId: getOrder
+      summary: "Finds order by ID"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/OrderDto'
+    delete:
+      tags:
+        - orders
+      summary: "Deletess order by ID"
+      operationId: deleteOrder
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /genres/{id}:
+    get:
+      tags:
+        - genres
+      summary: "Finds genre by ID"
+      operationId: getGenre
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GenreDto'
+    delete:
+      tags:
+        - genres
+      summary: "Deletes genre by ID"
+      operationId: deleteGenre
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /books/{id}:
+    get:
+      tags:
+        - books
+      summary: "Finds book by ID"
+      operationId: getBook
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BookDto'
+    delete:
+      tags:
+        - books
+      summary: "Deletes book by ID"
+      operationId: deleteBook
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /books/:
+    get:
+      tags:
+        - books
+      summary: "Finds book by title/genre"
+      operationId: getBookByTitle_1
+      parameters:
+        - name: title
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: genres
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookDto'
+  /authors/{id}:
+    get:
+      tags:
+        - authors
+      summary: "Finds author by ID"
+      operationId: getAuthor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AuthorFullDto'
+    delete:
+      tags:
+        - authors
+      summary: "Deletes author by ID"
+      operationId: deleteAuthor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /authors/:
+    get:
+      tags:
+        - authors
+      summary: "Finds author by name/genre"
+      operationId: findAllByNameContaining_1_1
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: genres
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuthorFullDto'
+components:
+  schemas:
+    UserPostDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        login:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+          enum:
+            - ROLE_USER
+            - ROLE_ADMIN
+        blocked:
+          type: boolean
+    PublisherSlimDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+    OrderPutDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        status:
+          type: string
+          enum:
+            - CREATED
+            - PROCESSING
+            - COMPLETED
+            - CANCELLED
+        orderTime:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/UserIdDto'
+        orderedBooks:
+          type: array
+          items:
+            type: integer
+            format: int32
+    UserIdDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+    GenreDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+    AuthorIdDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+    BookPostDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        price:
+          type: number
+          format: double
+        title:
+          type: string
+        numberOfPages:
+          type: integer
+          format: int32
+        yearOfRelease:
+          type: integer
+          format: int32
+        publisher:
+          $ref: '#/components/schemas/PublisherIdDto'
+        authorsList:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorIdDto'
+        genresList:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenreIdDto'
+    GenreIdDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+    PublisherIdDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+    AuthorPostDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        surname:
+          type: string
+        name:
+          type: string
+        patronymicName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        books:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookIdDto'
+    BookIdDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+    UserPutDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        login:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+          enum:
+            - ROLE_USER
+            - ROLE_ADMIN
+        blocked:
+          type: boolean
+    OrderPostDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        status:
+          type: string
+          enum:
+            - CREATED
+            - PROCESSING
+            - COMPLETED
+            - CANCELLED
+        orderTime:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/UserIdDto'
+        orderedBooks:
+          type: array
+          items:
+            type: integer
+            format: int32
+    OrderSlimDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        login:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+          enum:
+            - ROLE_USER
+            - ROLE_ADMIN
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderSlimDto'
+        blocked:
+          type: boolean
+    BookSlimDto:
+      type: object
+      properties:
+        title:
+          type: string
+    PublisherDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        publishedBooksList:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookSlimDto'
+    OrderDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        user:
+          $ref: '#/components/schemas/UserSlimDto'
+        orderedBooks:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookSlimDto'
+        status:
+          type: string
+          enum:
+            - CREATED
+            - PROCESSING
+            - COMPLETED
+            - CANCELLED
+        orderTime:
+          type: string
+          format: date-time
+    UserSlimDto:
+      type: object
+      properties:
+        login:
+          type: string
+    AuthorDto:
+      type: object
+      properties:
+        surname:
+          type: string
+        name:
+          type: string
+        patronymicName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+    BookDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        price:
+          type: number
+          format: double
+        authorsList:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorDto'
+        publisher:
+          $ref: '#/components/schemas/PublisherSlimDto'
+        title:
+          type: string
+        numberOfPages:
+          type: integer
+          format: int32
+        yearOfRelease:
+          type: integer
+          format: int32
+        genresList:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenreSlimDto'
+    GenreSlimDto:
+      type: object
+      properties:
+        name:
+          type: string
+    AuthorFullDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        surname:
+          type: string
+        name:
+          type: string
+        patronymicName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        writtenBooksList:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookSlimDto'
+        genresList:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenreSlimDto'
