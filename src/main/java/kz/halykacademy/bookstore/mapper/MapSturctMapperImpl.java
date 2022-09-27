@@ -45,7 +45,6 @@ public class MapSturctMapperImpl implements MapStructMapper {
     private final OrderRepository orderRepository;
     private final AuthorService authorService;
     private final GenreService genreService;
-
     private final BookService bookService;
 
 
